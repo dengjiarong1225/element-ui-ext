@@ -1,0 +1,9 @@
+{
+  "name": "element-ui-ext",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.umd.js",
+  "keywords": ["element-ui"],
+  "author": "zhengvipin@gmail.com",
+  "license": "ISC"
+}

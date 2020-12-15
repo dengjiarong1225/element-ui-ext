@@ -2,8 +2,8 @@ import VueHighlightJS from 'vue-highlight.js'
 import 'highlight.js/styles/atelier-cave-dark.css'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import ElementExt from './public/lib/index.umd'
-import './public/lib/index.css'
+import ElementExt from 'element-ui-ext'
+import 'element-ui-ext/index.css'
 
 export default (
     {
