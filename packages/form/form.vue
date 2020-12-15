@@ -217,8 +217,8 @@ export default {
     getWholeEnums(items) {
       const keys = items.filter(item => !!item.enumKey).map(item => item.enumKey)
       if (keys.length) {
-        if (this.$store && this.$store._actions && this.$store._actions['enumerate/getEnums']) {
-          this.$store.dispatch('enumerate/getEnums', keys).then(response => {
+        if (this.$getEnums) {
+          this.$getEnums(keys).then(response => {
             items.forEach(item => {
               const enumValue = response[item.enumKey] || []
               if (item.enumKey) item.data = enumValue

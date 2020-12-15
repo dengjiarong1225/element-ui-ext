@@ -13,6 +13,8 @@ import ExtTable from './table'
 import ExtDialog from './dialog'
 import _ from 'lodash'
 import resize from 'vue-resize-directive'
+import permission from './directive/permission'
+import elDragDialog from './directive/el-drag-dialog'
 import { Message, MessageBox } from 'element-ui'
 
 const components = [
@@ -153,6 +155,8 @@ function getElementOffset(element) {
 }
 
 const install = function(Vue, opts = {}) {
+  const { store } = opts
+
   /**
    * 注册实例方法
    */
@@ -168,11 +172,14 @@ const install = function(Vue, opts = {}) {
   Vue.prototype.$camelCaseObject = camelCaseObject
   Vue.prototype.$transEnumName = transEnumName
   Vue.prototype.$getElementOffset = getElementOffset
+  if (store && store._actions && store._actions['enumerate/getEnums']) Vue.prototype.$getEnums = keys => store.dispatch('enumerate/getEnums', keys)
 
   /**
    * 注册全局指令
    */
   Vue.directive('resize', resize)
+  Vue.directive('permission', permission(store))
+  Vue.directive('elDragDialog', elDragDialog)
 
   /**
    * 注册自定义组件

@@ -256,7 +256,7 @@ export default {
     },
     showColumns: {
       handler() {
-        this.innerColumns.forEach( column => {
+        this.innerColumns.forEach((column) => {
           column.hidden = !(this.showColumns.indexOf(column.prop) >= 0)
           this.$nextTick(() => this.elTable.doLayout())
         })
@@ -275,8 +275,8 @@ export default {
     getWholeEnums(columns) {
       const keys = columns.filter(item => !!item.enumKey).map(item => item.enumKey)
       if (keys.length) {
-        if (this.$store && this.$store._actions && this.$store._actions['enumerate/getEnums']) {
-          this.$store.dispatch('enumerate/getEnums', keys).then(response => {
+        if (this.$getEnums) {
+          this.$getEnums(keys).then(response => {
             columns.forEach(column => {
               const enumValue = response[column.enumKey] || []
               if (column.enumKey && column.formatter) {

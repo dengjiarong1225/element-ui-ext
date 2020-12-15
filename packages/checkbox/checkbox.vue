@@ -86,8 +86,8 @@ export default {
   },
   created() {
     if (this.enumKey && (!this.data || !this.data.length)) {
-      if (this.$store && this.$store._actions && this.$store._actions['enumerate/getEnums']) {
-        this.$store.dispatch('enumerate/getEnums', [this.enumKey]).then(response => {
+      if (this.$getEnums) {
+        this.$getEnums([this.enumKey]).then(response => {
           this.innerData = response[this.enumKey] || []
         })
       }
