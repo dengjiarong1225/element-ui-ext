@@ -22,7 +22,7 @@ module.exports = {
                     title: '自定义组件',
                     collapsable: true,
                     children: [
-                        ['base/test1', '我是小标题']
+                        ['button/test1', 'Button 按钮']
                     ]
                 }
             ]

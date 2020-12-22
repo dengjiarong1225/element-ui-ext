@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
     // 修改 src 为 examples
     pages: {
@@ -22,5 +24,13 @@ module.exports = {
                 // 修改它的选项...
                 return options
             })
+    },
+    configureWebpack: {
+        plugins: [
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery'
+            })
+        ]
     }
 }

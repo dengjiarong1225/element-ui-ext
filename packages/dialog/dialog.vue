@@ -1,37 +1,42 @@
 <template>
-  <el-button
-    v-permission="permissions"
-    class="ext-button"
-    v-bind="bindingProps"
-    v-on="bindingEvents"
+  <el-dialog
+      class="ext-dialog"
+      :visible.sync="innerVisible"
+      v-bind="bindingProps"
+      v-on="$listeners"
+      v-dialog-drag
   >
-    <slot>{{ name }}</slot>
-  </el-button>
+    <div
+        v-if="title || $slots.title"
+        slot="title"
+    >
+      <slot name="title">
+        {{ title }}
+      </slot>
+    </div>
+    <slot/>
+  </el-dialog>
 </template>
 
 <script>
-import { Button } from 'element-ui'
+import { Dialog } from 'element-ui'
 
 export default {
-  name: 'ExtButton',
-  components: { ElButton: Button },
+  name: 'ExtDialog',
+  components: { ElDialog: Dialog },
   props: {
-    /* eslint-disable */
-    name: String,
-    handler: Function,
-    permissions: {
-      type: Array,
-      default() {
-        return []
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    align: {
+      validator(val) {
+        return ['left', 'center', 'right'].includes(val);
       }
-    },
-    preventDefault: {
-      type: Boolean,
-      default: true
-    },
-    stopPropagation: {
-      type: Boolean,
-      default: true
     }
   },
   data() {
@@ -40,27 +45,22 @@ export default {
     }
   },
   computed: {
-    attrs() {
-      return this.$camelCaseObject(this.$attrs)
-    },
     bindingProps() {
-      return {
-        type: 'primary',
-        loading: this.loading,
-        ...this.attrs
-      }
+      let props = {
+        appendToBody: true,
+        lockScroll: false,
+        ...this.$attrs
+      };
+      if (!this.title && !this.$slots.title) props.showClose = false;
+      return props;
     },
-    bindingEvents() {
-      const events = { ...this.$listeners }
-      const hdlClick = events['click']
-      events['click'] = (e) => {
-        if (this.preventDefault) e.preventDefault()
-        if (this.stopPropagation) e.stopPropagation()
-        if (hdlClick) {
-          hdlClick((boo) => this.loading = boo)
-        } else if (this.handler) this.handler((boo) => this.loading = boo)
+    innerVisible: {
+      get() {
+        return this.visible;
+      },
+      set(boo) {
+        this.$emit('update:visible', boo);
       }
-      return events
     }
   }
 }

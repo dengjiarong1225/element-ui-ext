@@ -45,7 +45,6 @@ export default {
     },
     bindingProps() {
       return {
-        type: 'primary',
         loading: this.loading,
         ...this.attrs
       }
