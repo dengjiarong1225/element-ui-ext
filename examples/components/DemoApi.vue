@@ -1,7 +1,9 @@
 <template>
   <div>
     <h3>{{ title }}</h3>
-    <ext-table v-model="value" :columns="columns" :data="data" :border="false" :filterable="false" :stripe="false" :highlight-current-row="false"></ext-table>
+    <ext-table class="demo-api-table" :columns="columns" :data="data" :border="false"
+               :filterable="false" :stripe="false"
+               :highlight-current-row="false"></ext-table>
   </div>
 </template>
 
@@ -9,11 +11,11 @@
 
 const COLUMNS_MAP = {
   Attributes: [
-    {label: '参数', prop: 'param'},
+    {label: '参数', prop: 'param', width: '200px'},
     {label: '说明', prop: 'desc'},
-    {label: '类型', prop: 'type'},
-    {label: '可选值', prop: 'optional'},
-    {label: '默认值', prop: 'default'}
+    {label: '类型', prop: 'type', width: '150px'},
+    {label: '可选值', prop: 'optional', width: '150px'},
+    {label: '默认值', prop: 'default', width: '150px'}
   ]
 }
 
@@ -32,11 +34,6 @@ export default {
       default() {
         return []
       }
-    }
-  },
-  data() {
-    return {
-      value: []
     }
   },
   computed: {
@@ -66,5 +63,7 @@ export default {
 </script>
 
 <style scoped>
-
+.demo-api-table ::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #fff !important;
+}
 </style>

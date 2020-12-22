@@ -1,45 +1,45 @@
 <template>
   <div class="ext-table">
     <ext-column-picker
-      v-if="filterable"
-      v-show="columnPickerVisible"
-      v-model="showColumns"
-      :columns="columns"
-      @mouseover.native="mouseover"
-      @mouseout.native="mouseout"
+        v-if="filterable"
+        v-show="columnPickerVisible"
+        v-model="showColumns"
+        :columns="columns"
+        @mouseover.native="mouseover"
+        @mouseout.native="mouseout"
     />
     <el-table
-      ref="elTable"
-      :data="innerValue"
-      v-bind="tableProps"
-      @mouseover.native="mouseover"
-      @mouseout.native="mouseout"
-      v-on="tableEvents"
+        ref="elTable"
+        :data="innerValue"
+        v-bind="tableProps"
+        @mouseover.native="mouseover"
+        @mouseout.native="mouseout"
+        v-on="tableEvents"
     >
-      <el-table-column v-if="selectable" v-bind="selectionProps" />
-      <el-table-column v-if="showIndex" v-bind="indexProps" />
+      <el-table-column v-if="selectable" v-bind="selectionProps"/>
+      <el-table-column v-if="showIndex" v-bind="indexProps"/>
       <template v-for="(column, index) in innerColumns">
         <template v-if="!!!column.hidden">
           <template v-if="column.slotted || column.slotName">
-            <slot :name="column.slotName || column.prop" v-bind="column" />
+            <slot :name="column.slotName || column.prop" v-bind="column"/>
           </template>
-          <el-table-column v-else :key="index" v-bind="column" />
+          <el-table-column v-else :key="index" v-bind="column"/>
         </template>
       </template>
-      <slot />
+      <slot/>
     </el-table>
     <ext-pagination
-      v-if="pageable"
-      ref="extPagination"
-      :total="innerTotal"
-      v-bind="paginationProps"
-      @pagination-change="paginationChange"
+        v-if="pageable"
+        ref="extPagination"
+        :total="innerTotal"
+        v-bind="paginationProps"
+        @pagination-change="paginationChange"
     />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
+import {Table, TableColumn} from 'element-ui'
 import ExtPagination from '../pagination'
 import ExtColumnPicker from '../column-picker'
 
@@ -120,12 +120,13 @@ export default {
   data() {
     return {
       elTable: null,
+      innerValue: [],
       innerColumns: [],
       showColumns: [], // 需要展示的列名簇
       current: null, // 当前选中行
       selection: [], // 当前页选中的行
       columnPickerVisible: false, // 是否显示列筛选器
-      columnPickerStyle: { top: 0, left: 0 },
+      columnPickerStyle: {top: 0, left: 0},
       innerTotal: 0// 总页数
     }
   },
@@ -150,14 +151,6 @@ export default {
         align: 'right',
         hideOnSinglePage: true,
         ...props
-      }
-    },
-    innerValue: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
       }
     },
     selectionProps() {
@@ -188,12 +181,12 @@ export default {
         highlightCurrentRow: true,
         stripe: true,
         headerCellClassName: 'ext-table-check-all ' + (this.selectAll ? '' : 'ext-table-check-all--hidden'),
-        style: { width: '100%' },
+        style: {width: '100%'},
         ...this.attrs
       }
     },
     tableEvents() {
-      const events = { ...this.$listeners }
+      const events = {...this.$listeners}
       // 重定义currentChange和selectionChange事件，内部存储当前选中/勾选行数据
       const currentChange = events['current-change']
       events['current-change'] = (currentRow, oldCurrentRow) => {
@@ -250,6 +243,13 @@ export default {
         } else {
           this.innerValue = this.data
         }
+      },
+      deep: true,
+      immediate: true
+    },
+    innerValue: {
+      handler(val) {
+        this.$emit('input', val)
       },
       deep: true,
       immediate: true

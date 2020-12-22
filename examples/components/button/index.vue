@@ -45,10 +45,11 @@ export default {
         }, 500)
       },
       AttributesParams: [
-        ['name', '设置 标题，也可以通过 slot#default 传入 DOM', 'string', '—', '—'],
+        ['name', '设置标题，也可以通过slot#default传入DOM', 'string', '—', '—'],
         ['handler', '按钮点击事件，done是个回调函数，返回true会触发loading效果，false关闭loading效果', 'Function(done)', '—', '—'],
-        ['preventDefault', '配合handler使用，是否阻止默认事件', 'boolean', '—', 'true'],
-        ['stopPropagation', '配合handler使用，是否阻止冒泡事件', 'boolean', '—', 'true']
+        ['preventDefault', '配合handler属性使用，是否阻止默认事件', 'boolean', '—', 'true'],
+        ['stopPropagation', '配合handler属性使用，是否阻止冒泡事件', 'boolean', '—', 'true'],
+        ['permissions', '配合vuex使用，提供用户角色数组store.getters.roles，用于对比控制权限按钮的显隐', 'Array', '—', '—']
       ]
     }
   }
