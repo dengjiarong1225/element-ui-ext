@@ -14,6 +14,15 @@
       <li>
         <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtToolbar')">ExtToolbar</a>
       </li>
+      <li>
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtSelect')">ExtSelect</a>
+      </li>
+      <li>
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtRadio')">ExtRadio</a>
+      </li>
+      <li>
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtCheckbox')">ExtCheckbox</a>
+      </li>
     </ul>
   </div>
 </template>
@@ -21,6 +30,9 @@
 <script>
 import Button from './button'
 import Toolbar from './toolbar'
+import Select from './select'
+import Radio from './radio'
+import Checkbox from './checkbox'
 
 export default {
   name: 'HelloWorld',
@@ -36,6 +48,15 @@ export default {
           break;
         case "ExtToolbar":
           component = Toolbar;
+          break;
+        case "ExtSelect":
+          component = Select;
+          break;
+        case "ExtRadio":
+          component = Radio;
+          break;
+        case "ExtCheckbox":
+          component = Checkbox;
           break;
       }
       this.$layerOpen({content: component, parent: this})

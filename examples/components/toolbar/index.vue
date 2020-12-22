@@ -16,6 +16,8 @@
     <ext-toolbar :buttons="toolbar.buttons" :limit="2"></ext-toolbar>
     <el-divider></el-divider>
     <demo-api title="ExtToolbar Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <el-divider></el-divider>
+    <demo-api title="ExtButton Attributes" type="Attributes" :params="ExtButtonAttributesParams"></demo-api>
   </div>
 </template>
 
@@ -71,6 +73,9 @@ export default {
         ['group', '按钮组形式', 'Boolean', '—', 'false'],
         ['limit', '以“更多”形式展示索引大于等于limit的按钮', 'Number', '—', '0'],
         ['align', '对齐方式', 'String', 'left/center/right', 'left']
+      ],
+      ExtButtonAttributesParams: [
+        ['right', '用户控制显隐的唯一标识，作为ExtToolbar中rights属性的key存在', 'String', '—', '—'],
       ]
     }
   }

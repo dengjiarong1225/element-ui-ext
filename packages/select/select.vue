@@ -27,7 +27,9 @@ export default {
   components: { ElSelect: Select },
   props: {
     /* eslint-disable */
-    value: [String, Number, Boolean, Array],
+    value: {
+      required: false
+    },
     data: {
       type: Array,
       default() {

@@ -60,10 +60,11 @@ Vue.use(ElementExt, {
             }
             let result = {}
             for (let enumKey in enums) {
-                if (keys.indexOf(keys) >= 0) {
+                if (keys.indexOf(enumKey) >= 0) {
                     result[enumKey] = enums[enumKey]
                 }
             }
+            console.log(result)
             return Promise.resolve(result)
         }
     }
