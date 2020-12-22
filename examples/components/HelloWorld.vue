@@ -9,7 +9,10 @@
     <h3>Essential Links</h3>
     <ul>
       <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen">ExtButton</a>
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtButton')">ExtButton</a>
+      </li>
+      <li>
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtToolbar')">ExtToolbar</a>
       </li>
     </ul>
   </div>
@@ -17,6 +20,7 @@
 
 <script>
 import Button from './button'
+import Toolbar from './toolbar'
 
 export default {
   name: 'HelloWorld',
@@ -24,8 +28,17 @@ export default {
     msg: String
   },
   methods: {
-    handleOpen() {
-      this.$layerOpen({content: Button, parent: this})
+    handleOpen(componentName) {
+      let component;
+      switch (componentName) {
+        case "ExtButton":
+          component = Button;
+          break;
+        case "ExtToolbar":
+          component = Toolbar;
+          break;
+      }
+      this.$layerOpen({content: component, parent: this})
     }
   }
 }
