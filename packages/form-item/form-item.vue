@@ -1,106 +1,106 @@
 <template>
   <el-form-item
-    class="ext-form-item"
-    v-bind="bindingLabelProps"
+      class="ext-form-item"
+      v-bind="bindingLabelProps"
   >
     <template #label>
-      <slot name="label" />
+      <slot name="label"/>
     </template>
     <slot>
       <el-input
-        v-if="isInput"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :type="type"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
-        @keyup.enter.native="$emit('enter')"
+          v-if="isInput"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :type="type"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
+          @keyup.enter.native="$emit('enter')"
       />
       <el-input-number
-        v-else-if="type === 'number'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :controls-position="bindingProps.controlsPosition || 'right'"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
-        @keyup.enter.native="$emit('enter')"
+          v-else-if="type === 'number'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :controls-position="bindingProps.controlsPosition || 'right'"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
+          @keyup.enter.native="$emit('enter')"
       />
       <ext-select
-        v-else-if="type === 'select'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :data="bindingProps.data"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'select'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :data="bindingProps.data"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <el-date-picker
-        v-else-if="isDatePicker"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :type="type"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="isDatePicker"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :type="type"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <ext-time-picker
-        v-else-if="isTimePicker"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :type="type"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="isTimePicker"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :type="type"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <ext-radio
-        v-else-if="type === 'radio'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :data="bindingProps.data"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'radio'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :data="bindingProps.data"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <ext-checkbox
-        v-else-if="type === 'checkbox'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :data="bindingProps.data"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'checkbox'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :data="bindingProps.data"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <el-switch
-        v-else-if="type === 'switch'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'switch'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <el-slider
-        v-else-if="type === 'slider'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'slider'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <el-rate
-        v-else-if="type === 'rate'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'rate'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
       <el-cascader
-        v-else-if="type === 'cascader'"
-        v-model="innerValue"
-        class="ext-form-item__content"
-        :options="bindingProps.data || bindingProps.options"
-        v-bind="bindingProps"
-        v-on="bindingEvents"
+          v-else-if="type === 'cascader'"
+          v-model="innerValue"
+          class="ext-form-item__content"
+          :options="bindingProps.data || bindingProps.options"
+          v-bind="bindingProps"
+          v-on="bindingEvents"
       />
-      <span v-else class="ext-form-item__content" />
+      <span v-else class="ext-form-item__content"/>
     </slot>
   </el-form-item>
 </template>
 
 <script>
-import { Cascader, DatePicker, FormItem, Input, InputNumber, Rate, Slider, Switch } from 'element-ui'
+import {Cascader, DatePicker, FormItem, Input, InputNumber, Rate, Slider, Switch} from 'element-ui'
 import ExtSelect from '../select'
 import ExtRadio from '../radio'
 import ExtCheckbox from '../checkbox'
@@ -128,7 +128,7 @@ export default {
   props: {
     /* eslint-disable */
     type: String,
-    value: { required: false },
+    value: {required: false},
     // 事件作为属性绑定
     events: {
       type: Object,
@@ -136,17 +136,15 @@ export default {
         return {}
       }
     },
-    color: {
-      type: String,
-      validator(val) {
-        return ['info', 'success', 'primary', 'danger', 'warning'].includes(val)
-      },
-      default: 'info'
-    },
     // 是否展示label，配合ExtSearchForm组件使用
     showLabel: {
       type: Boolean,
       default: true
+    },
+    // 配合ExtForm组件使用，标识是否作为ExtForm的子组件存在
+    formItem: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -320,9 +318,9 @@ export default {
       // 动态拼接required规则
       const rules = props.rules
       if (rules) {
-        const newRule = { required: true, message: props.label + '不能为空', trigger: 'change' }
+        const newRule = {required: true, message: props.label + '不能为空', trigger: 'change'}
         if (this.$lodash.isArray(rules)) {
-          if (!this.$lodash.find(rules, { required: true })) rules.push(newRule)
+          if (!this.$lodash.find(rules, {required: true})) rules.push(newRule)
         } else {
           if (!rules.required) props.rules = [rules, newRule]
         }
@@ -339,7 +337,7 @@ export default {
         clearable: true,
         ...this.innerProps
       }
-      if (props['enumKey']) delete props['enumKey'] // 作为form组件时，剔除传入的enumKey
+      if (this.formItem && props['enumKey']) delete props['enumKey'] // 作为ExtForm的子组件时，剔除传入的enumKey
       if (props.readonly || props.disabled) props.disabled = true // 统一转换只读属性
       if (this.isDatePicker) props.pickerOptions = Object.assign({}, this.defaultPickerOptions[this.type], props.pickerOptions)
       return props
@@ -359,30 +357,30 @@ export default {
   .ext-form-item__content {
     width: 100% !important;
 
-    // 调整错误提示出现位置
-    ::v-deep ~ .el-form-item__error {
-      font-size: 10px;
-      top: 9px;
-      left: unset !important;
-      right: 30px !important;
-      opacity: 1;
-      transition: opacity ease-in-out 0.6s;
-
-      &:hover {
-        opacity: 0;
-      }
-    }
-
-    // hover隐藏错误提示
-    &:hover {
-      ::v-deep ~ .el-form-item__error {
-        opacity: 0;
-      }
-    }
+    // 调整错误提示出现位置，改为内联展示
+    //::v-deep ~ .el-form-item__error {
+    //  font-size: 10px;
+    //  top: 9px;
+    //  left: unset !important;
+    //  right: 30px !important;
+    //  opacity: 1;
+    //  transition: opacity ease-in-out 0.6s;
+    //
+    //  &:hover {
+    //    opacity: 0;
+    //  }
+    //}
+    //
+    //// hover隐藏错误提示
+    //&:hover {
+    //  ::v-deep ~ .el-form-item__error {
+    //    opacity: 0;
+    //  }
+    //}
 
     // number组件初始隐藏加减控件，hover才显示
     &.el-input-number {
-      ::v-deep .el-input-number__decrease,::v-deep .el-input-number__increase {
+      ::v-deep .el-input-number__decrease, ::v-deep .el-input-number__increase {
         opacity: 0;
         -webkit-transition: opacity .2s ease-in-out;
         transition: opacity .2s ease-in-out;

@@ -30,6 +30,10 @@ export default {
     ElRadioButton: RadioButton,
     ElRadioGroup: RadioGroup
   },
+  model: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
     /* eslint-disable */
     value: [String, Number, Boolean],
@@ -62,7 +66,7 @@ export default {
         return this.value
       },
       set(val) {
-        this.$emit('change', val)
+        this.$emit('input', val)
       }
     },
     innerProps() {

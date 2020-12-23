@@ -25,6 +25,10 @@ import { Select } from 'element-ui'
 export default {
   name: 'ExtSelect',
   components: { ElSelect: Select },
+  model: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
     /* eslint-disable */
     value: {
@@ -59,7 +63,7 @@ export default {
         return this.value
       },
       set(val) {
-        this.$emit('change', val)
+        this.$emit('input', val)
       }
     },
     innerProps() {
@@ -86,6 +90,7 @@ export default {
   created() {
     if (this.enumKey && (!this.data || !this.data.length)) {
       if (this.$getEnums) {
+        console.log("进来了么")
        this.$getEnums([this.enumKey]).then(response => {
           this.innerData = response[this.enumKey] || []
         })

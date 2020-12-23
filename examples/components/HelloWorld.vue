@@ -3,60 +3,63 @@
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
     <h3>Essential Links</h3>
     <ul>
-      <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtButton')">ExtButton</a>
-      </li>
-      <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtToolbar')">ExtToolbar</a>
-      </li>
-      <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtSelect')">ExtSelect</a>
-      </li>
-      <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtRadio')">ExtRadio</a>
-      </li>
-      <li>
-        <a class="link-item" type="primary" @click.prevent.stop="handleOpen('ExtCheckbox')">ExtCheckbox</a>
+      <li v-for="(item,index) in list" :key="index">
+        <a class="link-item" type="primary" @click.prevent.stop="handleOpen(item)">{{ item }}</a>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Button from './button'
-import Toolbar from './toolbar'
-import Select from './select'
-import Radio from './radio'
-import Checkbox from './checkbox'
+import ExtButton from './button'
+import ExtToolbar from './toolbar'
+import ExtSelect from './select'
+import ExtRadio from './radio'
+import ExtCheckbox from './checkbox'
+import ExtTimePicker from './time-picker'
+import ExtFormItem from './form-item'
+import ExtForm from './form'
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
+  data() {
+    return {
+      list: ['ExtButton', 'ExtToolbar', 'ExtSelect', 'ExtRadio', 'ExtCheckbox', 'ExtTimePicker', 'ExtFormItem', 'ExtForm']
+    }
+  },
   methods: {
     handleOpen(componentName) {
       let component;
       switch (componentName) {
         case "ExtButton":
-          component = Button;
+          component = ExtButton;
           break;
         case "ExtToolbar":
-          component = Toolbar;
+          component = ExtToolbar;
           break;
         case "ExtSelect":
-          component = Select;
+          component = ExtSelect;
           break;
         case "ExtRadio":
-          component = Radio;
+          component = ExtRadio;
           break;
         case "ExtCheckbox":
-          component = Checkbox;
+          component = ExtCheckbox;
+          break;
+        case "ExtTimePicker":
+          component = ExtTimePicker;
+          break;
+        case "ExtFormItem":
+          component = ExtFormItem;
+          break;
+        case "ExtForm":
+          component = ExtForm;
           break;
       }
       this.$layerOpen({content: component, parent: this})

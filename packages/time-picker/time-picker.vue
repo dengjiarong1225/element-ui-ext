@@ -24,19 +24,14 @@ export default {
     ElTimePicker: TimePicker,
     ElTimeSelect: TimeSelect
   },
+  model: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
     /* eslint-disable */
     value: [String, Date, Array],
-    formatter: {
-      type: Function,
-      default(val) {
-        return val
-      }
-    },
     timeSelect: Boolean
-  },
-  data() {
-    return {}
   },
   computed: {
     attrs() {
@@ -44,10 +39,10 @@ export default {
     },
     innerValue: {
       get() {
-        return this.formatter(this.value)
+        return this.value
       },
       set(val) {
-        this.$emit('change', val)
+        this.$emit('input', val)
       }
     },
     bindingProps() {

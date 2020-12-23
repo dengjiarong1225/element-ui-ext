@@ -2,49 +2,51 @@
   <div class="ext-form">
     <el-row :gutter="gutter" justify="space-between">
       <el-form
-        ref="elForm"
-        v-resize:debounce.50.initial="resize"
-        :style="style"
-        :model="model"
-        v-bind="bindingProps"
-        v-on="$listeners"
+          ref="elForm"
+          v-resize:debounce.50.initial="resize"
+          :style="style"
+          :model="model"
+          v-bind="bindingProps"
+          v-on="$listeners"
       >
         <template v-for="(multiItem,multiIndex) in multiItems">
           <el-collapse
-            v-if="multiItem.hasCollapse"
-            :key="multiIndex"
-            v-model="activeNames"
-            class="ext-form__collapse"
+              v-if="multiItem.hasCollapse"
+              :key="multiIndex"
+              v-model="activeNames"
+              class="ext-form__collapse"
           >
             <el-collapse-item :name="multiIndex" class="ext-form__collapse-item">
               <template slot="title">
                 <el-alert
-                  v-if="multiItem.type==='divider'"
-                  class="ext-form__divider"
-                  :type="multiItem.theme || 'success'"
-                  :effect="multiItem.effect || 'light'"
-                  :closable="false"
+                    v-if="multiItem.type==='divider'"
+                    class="ext-form__divider"
+                    :type="multiItem.theme || 'success'"
+                    :effect="multiItem.effect || 'light'"
+                    :closable="false"
                 >
-                  <i v-if="multiItem.icon" class="el-alert__icon" :class="multiItem.icon" />
+                  <i v-if="multiItem.icon" class="el-alert__icon" :class="multiItem.icon"/>
                   <span>{{ multiItem.label }}</span>
                 </el-alert>
               </template>
               <template v-for="(item,index) in multiItem.data">
                 <el-col v-if="!item.hidden" :key="index" :span="item.span || innerSpan">
-                  <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
+                  <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item"/>
                   <ext-form-item
-                    v-else-if="item.numberValue"
-                    :ref="item.prop"
-                    v-model.number="model[item.prop]"
-                    v-bind="item"
-                    v-on="getItemEvents(item)"
+                      v-else-if="item.numberValue"
+                      :ref="item.prop"
+                      v-model.number="model[item.prop]"
+                      form-item
+                      v-bind="item"
+                      v-on="getItemEvents(item)"
                   />
                   <ext-form-item
-                    v-else
-                    :ref="item.prop"
-                    v-model="model[item.prop]"
-                    v-bind="item"
-                    v-on="getItemEvents(item)"
+                      v-else
+                      :ref="item.prop"
+                      v-model="model[item.prop]"
+                      form-item
+                      v-bind="item"
+                      v-on="getItemEvents(item)"
                   />
                 </el-col>
               </template>
@@ -52,31 +54,34 @@
           </el-collapse>
           <template v-for="(item,index) in multiItem.data" v-else>
             <el-col v-if="!item.hidden" :key="index" :span="item.span || innerSpan">
-              <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
+              <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item"/>
               <ext-form-item
-                v-else-if="item.numberValue"
-                :ref="item.prop"
-                v-model.number="model[item.prop]"
-                v-bind="item"
-                v-on="getItemEvents(item)"
+                  v-else-if="item.numberValue"
+                  :ref="item.prop"
+                  v-model.number="model[item.prop]"
+                  form-item
+                  v-bind="item"
+                  v-on="getItemEvents(item)"
               />
               <ext-form-item
-                v-else
-                :ref="item.prop"
-                v-model="model[item.prop]"
-                v-bind="item"
-                v-on="getItemEvents(item)"
+                  v-else
+                  :ref="item.prop"
+                  v-model="model[item.prop]"
+                  form-item
+                  v-bind="item"
+                  v-on="getItemEvents(item)"
               />
             </el-col>
           </template>
         </template>
+        <slot />
       </el-form>
     </el-row>
   </div>
 </template>
 
 <script>
-import { Row, Col, Form, Collapse, CollapseItem, Alert } from 'element-ui'
+import {Row, Col, Form, Collapse, CollapseItem, Alert} from 'element-ui'
 import ExtFormItem from '../form-item'
 
 export default {
@@ -169,7 +174,8 @@ export default {
       immediate: true // 初始化就要实例化innerSpan
     },
     items: {
-      handler(items) {
+      handler() {
+        const items = this.$lodash.cloneDeep(this.items) // 不要改变入参对象
         this.getWholeEnums(items)
         const dividerArr = this.getDividerArr(items)
         this.rebuildItems(items, dividerArr)
@@ -281,7 +287,7 @@ export default {
           current++
         }
       } else {
-        multiItems = [{ hasCollapse: false, data: items }]
+        multiItems = [{hasCollapse: false, data: items}]
       }
       this.multiItems = multiItems
       this.activeNames = multiItems.map((item, index) => index)

@@ -30,6 +30,10 @@ export default {
     ElCheckboxButton: CheckboxButton,
     ElCheckboxGroup: CheckboxGroup
   },
+  model: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
     // eslint-disable-next-line vue/require-default-prop
     value: Array,
@@ -63,7 +67,7 @@ export default {
         return this.value
       },
       set(val) {
-        this.$emit('change', val)
+        this.$emit('input', val)
       }
     },
     innerProps() {

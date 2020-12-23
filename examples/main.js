@@ -64,7 +64,6 @@ Vue.use(ElementExt, {
                     result[enumKey] = enums[enumKey]
                 }
             }
-            console.log(result)
             return Promise.resolve(result)
         }
     }
