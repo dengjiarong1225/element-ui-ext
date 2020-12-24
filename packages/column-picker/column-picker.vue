@@ -16,8 +16,10 @@
             </div>
           </el-checkbox-group>
         </div>
-        <el-dropdown slot="reference" class="ext-column-picker__dropdown" :hide-on-click="false">
+        <el-dropdown slot="reference" class="ext-column-picker__dropdown" :hide-on-click="false" trigger="click">
           <span>显示字段<i class="el-icon-arrow-down el-icon--right"/></span>
+          <!-- 记得设置el-dropdown-menu，否则会报错Cannot read property 'disabled' of null -->
+          <el-dropdown-menu class="ext-column-picker__dropdown-menu" slot="dropdown"/>
         </el-dropdown>
       </el-popover>
     </transition>
@@ -95,6 +97,11 @@ export default {
   border-radius: 2px;
   padding: 3px 6px;
   cursor: pointer;
+}
+
+/*隐藏下拉菜单*/
+.ext-column-picker__dropdown-menu{
+  display: none !important;
 }
 
 .ext-column-picker__dropdown:hover {
