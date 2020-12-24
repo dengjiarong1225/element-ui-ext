@@ -31,7 +31,7 @@ Vue.prototype.$layerClose = layerClose;
 Vue.use(Element)
 Vue.use(ElementExt, {
     // 实际项目运用中，这里直接传入vuex对象就好了
-    // 这里只是做demo演示，手动实现方法
+    // 这里只是做demo演示，手动实现需要的方法
     store: {
         //  store && store.getters && store.getters.roles
         getters: {

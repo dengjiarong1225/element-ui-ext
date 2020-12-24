@@ -22,6 +22,10 @@ import ExtCheckbox from './checkbox'
 import ExtTimePicker from './time-picker'
 import ExtFormItem from './form-item'
 import ExtForm from './form'
+import ExtSearchForm from './search-form'
+import ExtPagination from './pagination'
+import ExtTable from './table'
+import ExtDialog from './dialog'
 
 export default {
   name: 'HelloWorld',
@@ -30,7 +34,7 @@ export default {
   },
   data() {
     return {
-      list: ['ExtButton', 'ExtToolbar', 'ExtSelect', 'ExtRadio', 'ExtCheckbox', 'ExtTimePicker', 'ExtFormItem', 'ExtForm']
+      list: ['ExtButton', 'ExtToolbar', 'ExtSelect', 'ExtRadio', 'ExtCheckbox', 'ExtTimePicker', 'ExtFormItem', 'ExtForm', 'ExtSearchForm', 'ExtPagination', 'ExtTable', 'ExtDialog']
     }
   },
   methods: {
@@ -60,6 +64,18 @@ export default {
           break;
         case "ExtForm":
           component = ExtForm;
+          break;
+        case "ExtSearchForm":
+          component = ExtSearchForm;
+          break;
+        case "ExtPagination":
+          component = ExtPagination;
+          break;
+        case "ExtTable":
+          component = ExtTable;
+          break;
+        case "ExtDialog":
+          component = ExtDialog;
           break;
       }
       this.$layerOpen({content: component, parent: this})

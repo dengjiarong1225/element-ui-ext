@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <h3>基础用法</h3>
-    <p>data属性渲染下拉列表。</p>
+    <p>基础的下拉列表展示用法。</p>
     <ext-select v-model="value" :data="options"></ext-select>
     <el-divider></el-divider>
     <h3>请求枚举</h3>
@@ -11,6 +11,12 @@
     <demo-api title="ExtSelect Attributes" type="Attributes" :params="AttributesParams"></demo-api>
     <el-divider></el-divider>
     <demo-api title="props" type="Attributes" :params="PropsParams"></demo-api>
+    <el-divider></el-divider>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/select">Select选择器</el-link>
+      。
+    </p>
   </div>
 </template>
 

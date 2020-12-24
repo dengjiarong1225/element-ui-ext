@@ -8,7 +8,13 @@
     <p>提供几个固定的时间点供用户选择。</p>
     <ext-time-picker v-model="value2" time-select></ext-time-picker>
     <el-divider></el-divider>
-    <demo-api title="ExtButton Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <demo-api title="ExtTimePicker Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <el-divider></el-divider>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/time-picker">TimePicker时间选择器</el-link>
+      。
+    </p>
   </div>
 </template>
 

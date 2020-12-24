@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <h3>基础用法</h3>
-    <p>data属性渲染多选框列表。</p>
+    <p>基础的多选框列表展示用法。</p>
     <ext-checkbox v-model="value" :data="options"></ext-checkbox>
     <el-divider></el-divider>
     <h3>请求枚举</h3>
@@ -12,9 +12,15 @@
     <p>按钮样式的多选组合。</p>
     <ext-checkbox v-model="value3" enum-key="device" show-button></ext-checkbox>
     <el-divider></el-divider>
-    <demo-api title="ExtSelect Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <demo-api title="ExtCheckbox Attributes" type="Attributes" :params="AttributesParams"></demo-api>
     <el-divider></el-divider>
     <demo-api title="props" type="Attributes" :params="PropsParams"></demo-api>
+    <el-divider></el-divider>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/checkbox">Checkbox复选框</el-link>
+      。
+    </p>
   </div>
 </template>
 

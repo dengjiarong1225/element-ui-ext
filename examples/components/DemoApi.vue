@@ -16,6 +16,15 @@ const COLUMNS_MAP = {
     {label: '类型', prop: 'type', width: '150px'},
     {label: '可选值', prop: 'optional', width: '150px'},
     {label: '默认值', prop: 'default', width: '150px'}
+  ],
+  Events: [
+    {label: '事件名', prop: 'name', width: '300px'},
+    {label: '说明', prop: 'desc'},
+    {label: '回调参数', prop: 'param'},
+  ],
+  Slots: [
+    {label: 'name', prop: 'name', width: '300px'},
+    {label: '说明', prop: 'desc'}
   ]
 }
 
@@ -26,7 +35,7 @@ export default {
     type: {
       type: String,
       validator(val) {
-        return ['Attributes'].indexOf(val) >= 0;
+        return ['Attributes','Events','Slots'].indexOf(val) >= 0;
       }
     },
     params: {
@@ -51,6 +60,21 @@ export default {
             row.type = item[2];
             row.optional = item[3];
             row.default = item[4];
+            result.push(row)
+          }
+            break;
+          case 'Events': {
+            let row = {}
+            row.name = item[0];
+            row.desc = item[1];
+            row.param = item[2];
+            result.push(row)
+          }
+            break;
+          case 'Slots': {
+            let row = {}
+            row.name = item[0];
+            row.desc = item[1];
             result.push(row)
           }
             break;

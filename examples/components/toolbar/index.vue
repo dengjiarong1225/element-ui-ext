@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <h3>基础用法</h3>
-    <p>buttons属性渲染按钮组。</p>
+    <p>基础的工具栏展示用法。</p>
     <ext-toolbar :buttons="toolbar.buttons"></ext-toolbar>
     <el-divider></el-divider>
     <h3>隐藏状态</h3>
@@ -18,10 +18,21 @@
     <demo-api title="ExtToolbar Attributes" type="Attributes" :params="AttributesParams"></demo-api>
     <el-divider></el-divider>
     <demo-api title="ExtButton Attributes" type="Attributes" :params="ExtButtonAttributesParams"></demo-api>
+    <el-divider></el-divider>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/button">Button按钮</el-link>
+      以及
+      element-ui-ext 的
+      <el-link type="primary" @click.stop.prevent="handleOpen('ExtButton')">ExtButton按钮</el-link>
+      。
+    </p>
   </div>
 </template>
 
 <script>
+import ExtButton from "../button";
+
 export default {
   name: "index",
   data() {
@@ -77,6 +88,17 @@ export default {
       ExtButtonAttributesParams: [
         ['right', '用户控制显隐的唯一标识，作为ExtToolbar中rights属性的key存在', 'String', '—', '—'],
       ]
+    }
+  },
+  methods:{
+    handleOpen(componentName) {
+      let component;
+      switch (componentName) {
+        case "ExtButton":
+          component = ExtButton;
+          break;
+      }
+      this.$layerOpen({content: component, parent: this})
     }
   }
 }

@@ -18,10 +18,37 @@
     </el-form>
     <el-divider></el-divider>
     <demo-api title="ExtFormItem Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/radio">Radio单选框</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/checkbox">Checkbox复选框</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/input">Input输入框</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/input-number">InputNumber计数器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/select">Select选择器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/cascader">Cascader级联选择器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/switch">Switch开关</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/slider">Slider滑块</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/time-picker">TimePicker时间选择器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/date-picker">DatePicker日期选择器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/date-time-picker">DateTimePicker日期时间选择器</el-link>、
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/rate">Rate评分</el-link>
+      以及
+      element-ui-ext 的
+      <el-link type="primary" @click.stop.prevent="handleOpen('ExtRadio')">ExtRadio单选框</el-link>、
+      <el-link type="primary" @click.stop.prevent="handleOpen('ExtCheckbox')">ExtCheckbox复选框</el-link>、
+      <el-link type="primary" @click.stop.prevent="handleOpen('ExtSelect')">ExtSelect选择器</el-link>、
+      <el-link type="primary" @click.stop.prevent="handleOpen('ExtTimePicker')">ExtTimePicker时间选择器</el-link>
+      。
+    </p>
   </div>
 </template>
 
 <script>
+import ExtSelect from "../select";
+import ExtRadio from "../radio";
+import ExtCheckbox from "../checkbox";
+import ExtTimePicker from "../time-picker";
+
 export default {
   name: "index",
   data() {
@@ -69,6 +96,26 @@ export default {
         ['events', '属性形式绑定事件，配合ExtSearchForm组件使用', 'Object', '—', '—'],
         ['showLabel', '是否展示label属性，配合ExtSearchForm组件使用', 'Boolean', '—', 'true']
       ]
+    }
+  },
+  methods:{
+    handleOpen(componentName) {
+      let component;
+      switch (componentName) {
+        case "ExtSelect":
+          component = ExtSelect;
+          break;
+        case "ExtRadio":
+          component = ExtRadio;
+          break;
+        case "ExtCheckbox":
+          component = ExtCheckbox;
+          break;
+        case "ExtTimePicker":
+          component = ExtTimePicker;
+          break;
+      }
+      this.$layerOpen({content: component, parent: this})
     }
   }
 }

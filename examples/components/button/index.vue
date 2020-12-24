@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <h3>基础用法</h3>
-    <p>name属性渲染按钮名称。</p>
+    <p>基础的按钮展示用法。</p>
     <ext-button name="默认按钮"></ext-button>
     <ext-button type="primary" name="主要按钮"></ext-button>
     <ext-button type="success" name="成功按钮"></ext-button>
@@ -27,6 +27,12 @@
     </div>
     <el-divider></el-divider>
     <demo-api title="ExtButton Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <el-divider></el-divider>
+    <p>更多参数参考
+      element-ui 的
+      <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/button">Button按钮</el-link>
+      。
+    </p>
   </div>
 </template>
 

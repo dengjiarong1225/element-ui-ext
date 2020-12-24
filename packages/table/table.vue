@@ -1,22 +1,22 @@
 <template>
   <div class="ext-table" v-loading="delayLoading">
     <ext-column-picker
-      v-if="filterable"
-      v-show="columnPickerVisible"
-      v-model="showColumns"
-      :columns="columns"
-      @mouseover.native="mouseover"
-      @mouseout.native="mouseout"
+        v-if="filterable"
+        v-show="columnPickerVisible"
+        v-model="showColumns"
+        :columns="columns"
+        @mouseover.native="mouseover"
+        @mouseout.native="mouseout"
     />
     <transition name="el-fade-in">
       <el-table
-        v-if="delayVisible"
-        ref="elTable"
-        :data="innerValue"
-        v-bind="tableProps"
-        @mouseover.native="mouseover"
-        @mouseout.native="mouseout"
-        v-on="tableEvents"
+          v-if="delayVisible"
+          ref="elTable"
+          :data="innerValue"
+          v-bind="tableProps"
+          @mouseover.native="mouseover"
+          @mouseout.native="mouseout"
+          v-on="tableEvents"
       >
         <el-table-column v-if="selectable" v-bind="selectionProps"/>
         <el-table-column v-if="showIndex" v-bind="indexProps"/>
@@ -32,18 +32,18 @@
       </el-table>
     </transition>
     <ext-pagination
-      v-if="pageable"
-      :key="paginationKey"
-      ref="extPagination"
-      :total="innerTotal"
-      v-bind="paginationProps"
-      @pagination-change="paginationChange"
+        v-if="pageable"
+        :key="paginationKey"
+        ref="extPagination"
+        :total="innerTotal"
+        v-bind="paginationProps"
+        @pagination-change="paginationChange"
     />
   </div>
 </template>
 
 <script>
-import { Table, TableColumn } from 'element-ui'
+import {Table, TableColumn} from 'element-ui'
 import ExtPagination from '../pagination'
 import ExtColumnPicker from '../column-picker'
 
@@ -112,7 +112,7 @@ export default {
       type: Boolean,
       default: false
     },
-    selectAll: {
+    multiple: {
       type: Boolean,
       default: true
     }
@@ -128,7 +128,7 @@ export default {
       current: null, // 当前选中行
       selection: [], // 当前页选中的行
       columnPickerVisible: false, // 是否显示列筛选器
-      columnPickerStyle: { top: 0, left: 0 },
+      columnPickerStyle: {top: 0, left: 0},
       innerTotal: 0,// 总页数
       paginationKey: 19921004
     }
@@ -181,13 +181,13 @@ export default {
     tableProps() {
       return {
         border: true,
-        headerCellClassName: 'ext-table-check-all ' + (this.selectAll ? '' : 'ext-table-check-all--hidden'),
-        style: { width: '100%' },
+        headerCellClassName: 'ext-table-check-all ' + (this.multiple ? '' : 'ext-table-check-all--hidden'),
+        style: {width: '100%'},
         ...this.attrs
       }
     },
     tableEvents() {
-      const events = { ...this.$listeners }
+      const events = {...this.$listeners}
       // 重定义currentChange和selectionChange事件，内部存储当前选中/勾选行数据
       const currentChange = events['current-change']
       events['current-change'] = (currentRow, oldCurrentRow) => {
@@ -201,7 +201,7 @@ export default {
       }
       const select = events['select']
       events['select'] = (selection, row) => {
-        if (!this.selectAll && selection.length > 1) {
+        if (!this.multiple && selection.length > 1) {
           this.elTable.clearSelection()
           this.elTable.toggleRowSelection(row, true)
           this.selection = [row]
@@ -347,11 +347,12 @@ export default {
     border-bottom: 1px solid #EBEEF5;
   }
 
-  .ext-table-check-all {
+  // 表头背景色
+  ::v-deep .ext-table-check-all {
     background-color: #DCDFE6 !important;
   }
 
-  .ext-table-check-all--hidden > .cell > .el-checkbox {
+  ::v-deep .ext-table-check-all--hidden > .cell > .el-checkbox {
     display: none;
   }
 }

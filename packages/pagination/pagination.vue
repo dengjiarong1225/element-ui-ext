@@ -1,10 +1,10 @@
 <template>
   <el-pagination
-    class="ext-pagination"
-    :current-page.sync="innerCurrentPage"
-    :page-size.sync="innerPageSize"
-    v-bind="bindingProps"
-    v-on="bindingEvents"
+      class="ext-pagination"
+      :current-page.sync="innerCurrentPage"
+      :page-size.sync="innerPageSize"
+      v-bind="bindingProps"
+      v-on="bindingEvents"
   />
 </template>
 
@@ -57,7 +57,6 @@ export default {
         this.$emit('pagination-change', page, this.innerPageSize)
         if (currentChange) currentChange(page)
       }
-      events['page-change'] = events['current-change']
       const sizeChange = events['size-change']
       events['size-change'] = (size) => {
         this.innerPageSize = size
