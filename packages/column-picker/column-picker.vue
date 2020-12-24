@@ -2,12 +2,12 @@
   <div class="ext-column-picker">
     <transition name="el-fade-in-linear">
       <el-popover
-        v-bind="popoverProps"
+          v-bind="popoverProps"
       >
         <div>
           <el-checkbox :value="checkAll" :indeterminate="indeterminate" @change="handleCheckAll">全选
           </el-checkbox>
-          <el-divider class="ext-column-picker__divider" />
+          <el-divider class="ext-column-picker__divider"/>
           <el-checkbox-group v-model="innerValue">
             <div v-for="(column,index) in innerColumns" :key="index">
               <el-checkbox :key="index" :label="column.prop" :disabled="column.disabled">
@@ -17,9 +17,7 @@
           </el-checkbox-group>
         </div>
         <el-dropdown slot="reference" class="ext-column-picker__dropdown" :hide-on-click="false">
-          <span>显示字段<i class="el-icon-arrow-down el-icon--right" /></span>
-          <!-- 一定要设置 el-dropdown-menu，否则会报错 cant't read property 'disabled'... -->
-          <el-dropdown-menu slot="dropdown" />
+          <span>显示字段<i class="el-icon-arrow-down el-icon--right"/></span>
         </el-dropdown>
       </el-popover>
     </transition>
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-import { Popover, Checkbox, Divider, CheckboxGroup, Dropdown, DropdownMenu } from 'element-ui'
+import { Popover, Checkbox, Divider, CheckboxGroup, Dropdown } from 'element-ui'
 
 export default {
   name: 'ExtColumnPicker',
@@ -36,8 +34,7 @@ export default {
     ElCheckbox: Checkbox,
     ElDivider: Divider,
     ElCheckboxGroup: CheckboxGroup,
-    ElDropdown: Dropdown,
-    ElDropdownMenu: DropdownMenu
+    ElDropdown: Dropdown
   },
   inheritAttrs: false,
   model: {
@@ -94,10 +91,14 @@ export default {
 
 <style scoped>
 .ext-column-picker__dropdown {
-  border: 1px solid #000;
-  border-radius: 4px;
-  padding: 0 4px;
+  border: 1px solid #DCDFE6;
+  border-radius: 2px;
+  padding: 3px 6px;
   cursor: pointer;
+}
+
+.ext-column-picker__dropdown:hover {
+  border-color: #000000;
 }
 
 ::v-deep .ext-column-picker__divider {

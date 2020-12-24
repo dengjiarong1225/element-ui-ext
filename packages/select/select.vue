@@ -90,7 +90,6 @@ export default {
   created() {
     if (this.enumKey && (!this.data || !this.data.length)) {
       if (this.$getEnums) {
-        console.log("进来了么")
        this.$getEnums([this.enumKey]).then(response => {
           this.innerData = response[this.enumKey] || []
         })

@@ -1,51 +1,54 @@
 <template>
-  <div class="ext-table">
+  <div class="ext-table" v-loading="delayLoading">
     <ext-column-picker
-        v-if="filterable"
-        v-show="columnPickerVisible"
-        v-model="showColumns"
-        :columns="columns"
-        @mouseover.native="mouseover"
-        @mouseout.native="mouseout"
+      v-if="filterable"
+      v-show="columnPickerVisible"
+      v-model="showColumns"
+      :columns="columns"
+      @mouseover.native="mouseover"
+      @mouseout.native="mouseout"
     />
-    <el-table
+    <transition name="el-fade-in">
+      <el-table
+        v-if="delayVisible"
         ref="elTable"
         :data="innerValue"
         v-bind="tableProps"
         @mouseover.native="mouseover"
         @mouseout.native="mouseout"
         v-on="tableEvents"
-    >
-      <el-table-column v-if="selectable" v-bind="selectionProps"/>
-      <el-table-column v-if="showIndex" v-bind="indexProps"/>
-      <template v-for="(column, index) in innerColumns">
-        <template v-if="!!!column.hidden">
-          <template v-if="column.slotted || column.slotName">
-            <slot :name="column.slotName || column.prop" v-bind="column"/>
+      >
+        <el-table-column v-if="selectable" v-bind="selectionProps"/>
+        <el-table-column v-if="showIndex" v-bind="indexProps"/>
+        <template v-for="(column, index) in innerColumns">
+          <template v-if="!!!column.hidden">
+            <template v-if="column.slotted || column.slotName">
+              <slot :name="column.slotName || column.prop" v-bind="column"/>
+            </template>
+            <el-table-column v-else :key="index" v-bind="column"/>
           </template>
-          <el-table-column v-else :key="index" v-bind="column"/>
         </template>
-      </template>
-      <slot/>
-    </el-table>
+        <slot/>
+      </el-table>
+    </transition>
     <ext-pagination
-        v-if="pageable"
-        ref="extPagination"
-        :total="innerTotal"
-        v-bind="paginationProps"
-        @pagination-change="paginationChange"
+      v-if="pageable"
+      :key="paginationKey"
+      ref="extPagination"
+      :total="innerTotal"
+      v-bind="paginationProps"
+      @pagination-change="paginationChange"
     />
   </div>
 </template>
 
 <script>
-import {Table, TableColumn} from 'element-ui'
+import { Table, TableColumn } from 'element-ui'
 import ExtPagination from '../pagination'
 import ExtColumnPicker from '../column-picker'
 
 const DEFAULT_VALUE = '--'
 const PAGINATION_PROPS = ['small', 'background', 'pageSize', 'currentPage', 'total', 'pageCount', 'layout', 'pageSizes', 'prevText', 'nextText', 'hideOnSinglePage']
-// const PAGINATION_EVENTS = ['size-change', 'page-change', 'prev-click', 'next-click', 'pagination-change']
 
 export default {
   name: 'ExtTable',
@@ -103,10 +106,7 @@ export default {
       default: false
     },
     // 是否支持列筛选
-    filterable: {
-      type: Boolean,
-      default: true
-    },
+    filterable: Boolean,
     // 当内容过长被隐藏时显示 tooltip
     showOverflowTooltip: {
       type: Boolean,
@@ -119,6 +119,8 @@ export default {
   },
   data() {
     return {
+      delayVisible: false,// 延迟渲染标识，配合异步枚举使用
+      delayLoading: true,// 优化延迟渲染效果，配合 delayVisible 使用，可设置为 false
       elTable: null,
       innerValue: [],
       innerColumns: [],
@@ -126,8 +128,9 @@ export default {
       current: null, // 当前选中行
       selection: [], // 当前页选中的行
       columnPickerVisible: false, // 是否显示列筛选器
-      columnPickerStyle: {top: 0, left: 0},
-      innerTotal: 0// 总页数
+      columnPickerStyle: { top: 0, left: 0 },
+      innerTotal: 0,// 总页数
+      paginationKey: 19921004
     }
   },
   computed: {
@@ -146,10 +149,10 @@ export default {
         pageSize: 20,
         pageSizes: [20, 50, 100],
         layout: 'prev, pager, next, jumper, sizes, total',
-        background: true,
+        // background: true,
         small: false,
         align: 'right',
-        hideOnSinglePage: true,
+        // hideOnSinglePage: true,
         ...props
       }
     },
@@ -178,15 +181,13 @@ export default {
     tableProps() {
       return {
         border: true,
-        highlightCurrentRow: true,
-        stripe: true,
         headerCellClassName: 'ext-table-check-all ' + (this.selectAll ? '' : 'ext-table-check-all--hidden'),
-        style: {width: '100%'},
+        style: { width: '100%' },
         ...this.attrs
       }
     },
     tableEvents() {
-      const events = {...this.$listeners}
+      const events = { ...this.$listeners }
       // 重定义currentChange和selectionChange事件，内部存储当前选中/勾选行数据
       const currentChange = events['current-change']
       events['current-change'] = (currentRow, oldCurrentRow) => {
@@ -232,6 +233,9 @@ export default {
       deep: true,
       immediate: true
     },
+    innerTotal() {
+      this.paginationKey = new Date().getTime()
+    },
     data: {
       handler() {
         // 前端分页时tableData做内部逻辑处理
@@ -266,28 +270,31 @@ export default {
   },
   mounted() {
     this.elTable = this.$refs.elTable
-    this.$nextTick(() => {
-      // const tableOffset = this.$getElementOffset(this.elTable.$el)
-      // this.columnPickerStyle = { left: tableOffset.left + 6 + 'px', top: tableOffset.top - 12 + 'px' }
-    })
   },
   methods: {
     getWholeEnums(columns) {
       const keys = columns.filter(item => !!item.enumKey).map(item => item.enumKey)
-      if (keys.length) {
-        if (this.$getEnums) {
-          this.$getEnums(keys).then(response => {
-            columns.forEach(column => {
+      if (keys.length && this.$getEnums) {
+        this.$getEnums(keys).then(response => {
+          columns.forEach(column => {
+            if (column.enumKey && !column.formatter) {
               const enumValue = response[column.enumKey] || []
-              if (column.enumKey && column.formatter) {
-                column.formatter = (row, col, val) => {
-                  if (this.$lodash.isNil(val)) return DEFAULT_VALUE
-                  return this.$transEnumName(enumValue, val, DEFAULT_VALUE)
-                }
+              column.formatter = (row, col, val) => {
+                if (this.$lodash.isNil(val)) return DEFAULT_VALUE
+                return this.$transEnumName(enumValue, val, DEFAULT_VALUE)
               }
-            })
+            }
           })
-        }
+          this.innerColumns = columns
+          this.delayVisible = true
+          this.delayLoading = false
+        }).catch(() => {
+          this.delayVisible = true
+          this.delayLoading = false
+        })
+      } else {
+        this.delayVisible = true
+        this.delayLoading = false
       }
     },
     rebuildColumns(columns) {
@@ -329,8 +336,8 @@ export default {
   .ext-column-picker {
     z-index: 19800;
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 6px;
+    top: -12px;
   }
 
   .ext-pagination {

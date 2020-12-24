@@ -4,7 +4,7 @@
       <div class="ext-search-form__header--left">
         <el-tooltip v-if="type==='icon'" v-show="hasMore" :content="visible?'收起更多查询':'展开更多查询'">
           <el-link type="primary" :underline="false" @click="collapse">
-            <i class="el-icon-arrow-up" :class="{'is-active':visible}" />
+            <i class="el-icon-arrow-up" :class="{'is-active':visible}"/>
           </el-link>
         </el-tooltip>
         <transition name="el-fade-in-linear">
@@ -25,22 +25,24 @@
       </div>
       <div class="ext-search-form__header--right">
         <slot name="buttons">
-          <ext-toolbar v-bind="toolbarProps" />
+          <ext-toolbar v-bind="toolbarProps"/>
         </slot>
       </div>
     </div>
-    <div class="ext-search-form__content" :style="wrapStyle">
+    <el-card class="ext-search-form__content" shadow="never" :style="wrapStyle">
       <!-- 革命性的进步，解决了插槽多级传递的问题 -->
-      <ext-form ref="extForm" v-bind="formProps" @form-change="formChange" @search="$emit('search')">
+      <ext-form ref="extForm" :items="innerItems" v-bind="formProps" @form-change="formChange"
+                @search="$emit('search')"
+      >
         <template v-for="item in innerItems">
           <template v-if="item.slotName || item.type==='slot'" :slot="item.slotName || item.prop">
-            <slot :name="item.slotName || item.prop" v-bind="item" />
+            <slot :name="item.slotName || item.prop" v-bind="item"/>
           </template>
         </template>
       </ext-form>
-    </div>
+    </el-card>
     <div v-if="type==='text'" v-show="hasMore" class="ext-search-form__more" @click="collapse">
-      <i :class="visible?'el-icon-caret-top':'el-icon-caret-bottom'" />
+      <i :class="visible?'el-icon-caret-top':'el-icon-caret-bottom'"/>
       <span>{{ visible ? '收起更多查询' : '展开更多查询' }}</span>
     </div>
   </div>
@@ -51,7 +53,6 @@ import { Tooltip, Link, Tag } from 'element-ui'
 import ExtToolbar from '../toolbar'
 import ExtForm from '../form'
 
-const MAX_HEIGHT = '42px'
 const TOOLBAR_PROPS = ['buttons', 'rights', 'group', 'labelWidth', 'limit']
 const FORM_PROPS = ['model', 'items', 'gutter', 'labelWidth', 'right', 'top', 'left', 'bottom', 'span', 'gutter']
 
@@ -67,10 +68,7 @@ export default {
   inheritAttrs: false,
   props: {
     /* eslint-disable */
-    maxHeight: {
-      type: String,
-      default: '30vh'
-    },
+    maxHeight: String,
     title: {
       type: String,
       default: '查询条件：'
@@ -90,17 +88,23 @@ export default {
   },
   data() {
     return {
-      innerMaxHeight: MAX_HEIGHT,
       overflow: 'hidden',
       visible: false,
       innerItems: [],
       hasMore: false,
-      showTips: false
+      showTips: false,
+      innerHeight: 0
     }
   },
   computed: {
     searchSize() {
       return this.size || (this.$ELEMENT || {}).size || 'default'
+    },
+    innerMinHeight() {
+      return { default: 40, medium: 36, small: 32, mini: 28 }[this.searchSize] + 20 + 20 + 'px'
+    },
+    innerMaxHeight() {
+      return ({ default: 40, medium: 36, small: 32, mini: 28 }[this.searchSize] + 20) * 2 + 20 - 2 + 'px'
     },
     classes() {
       return `ext-search-form ext-search-form--${this.searchSize}`
@@ -114,14 +118,14 @@ export default {
     formProps() {
       const props = this.$lodash.pickBy(this.attrs, (value, key) => FORM_PROPS.indexOf(key) >= 0)
       if (!this.showLabel) props.labelWidth = '0'
-      if (props.model) props.model = {}
-      if (props.items) props.items = []
-      return this.$lodash.pickBy(this.attrs, (value, key) => FORM_PROPS.indexOf(key) >= 0)
+      if (!props.model) props.model = {}
+      if (!props.items) props.items = []
+      return props
     },
     wrapStyle() {
       return {
         overflow: this.overflow,
-        height: this.innerMaxHeight || this.maxHeight
+        height: this.innerHeight || this.innerMinHeight
       }
     },
     checkedItems() {
@@ -169,8 +173,7 @@ export default {
       return isArray && value.join(',') || String(value || '')
     },
     resetField(item) {
-      let value = this.formProps.model[item.prop]
-      value = this.$lodash.isArray(value) ? [] : undefined
+      this.formProps.model[item.prop] = this.$lodash.isArray(this.formProps.model[item.prop]) ? [] : undefined
     },
     isRange(item) {
       return ['datetimerange', 'daterange', 'monthrange', 'timerange'].includes(item.type)
@@ -178,11 +181,12 @@ export default {
     collapse() {
       this.visible = !this.visible
       if (this.visible) {
-        this.overflow = 'auto'
-        this.innerMaxHeight = undefined
+        this.innerHeight = this.maxHeight || this.innerMaxHeight
+        setTimeout(() => this.overflow = 'auto', 500)
       } else {
+        if (this.$refs.extForm.$el.parentNode.parentNode.scrollTop > 0) this.$refs.extForm.$el.parentNode.parentNode.scrollTop = 0
+        this.innerHeight = this.innerMinHeight
         this.overflow = 'hidden'
-        this.innerMaxHeight = MAX_HEIGHT
       }
     }
   }
@@ -201,7 +205,6 @@ export default {
     color: #409eff;
     background-color: #f4f4f5;
     padding: 0 12px;
-    margin-bottom: 14px;
 
     .ext-search-form__header--left {
       flex-grow: 1;
@@ -241,7 +244,9 @@ export default {
   }
 
   .ext-search-form__content {
+    border-radius: 0;
     transition: height linear .3s;
+    border: 1px solid #F2F6FC;
   }
 
   /*收起/展开操作栏 */

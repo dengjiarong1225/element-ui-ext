@@ -138,7 +138,6 @@ export default {
   data() {
     return {
       elForm: null,
-      innerItems: [],
       innerSpan: 0,
       activeNames: [],
       multiItems: []
@@ -174,7 +173,7 @@ export default {
       immediate: true // 初始化就要实例化innerSpan
     },
     items: {
-      handler() {
+       handler() {
         const items = this.$lodash.cloneDeep(this.items) // 不要改变入参对象
         this.getWholeEnums(items)
         const dividerArr = this.getDividerArr(items)
@@ -229,6 +228,7 @@ export default {
               const enumValue = response[item.enumKey] || []
               if (item.enumKey) item.data = enumValue
             })
+            this.$forceUpdate() // 强制更新一次dom，避免枚举渲染失败
           })
         }
       }

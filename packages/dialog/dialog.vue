@@ -4,7 +4,7 @@
       :visible.sync="innerVisible"
       v-bind="bindingProps"
       v-on="$listeners"
-      v-dialog-drag
+      v-el-drag-dialog
   >
     <div
         v-if="title || $slots.title"
@@ -25,24 +25,8 @@ export default {
   name: 'ExtDialog',
   components: { ElDialog: Dialog },
   props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    title: {
-      type: String,
-      default: ''
-    },
-    align: {
-      validator(val) {
-        return ['left', 'center', 'right'].includes(val);
-      }
-    }
-  },
-  data() {
-    return {
-      loading: false
-    }
+    visible: Boolean,
+    title: String
   },
   computed: {
     bindingProps() {
