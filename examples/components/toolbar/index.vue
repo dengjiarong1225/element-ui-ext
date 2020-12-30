@@ -43,7 +43,7 @@ export default {
           type: 'success',
           right: 'addRight',
           handler: function () {
-            this.$alert('add');
+            this.$success('add');
           },
           icon: "el-icon-circle-plus-outline"
         }, {
