@@ -1,15 +1,17 @@
 <template>
   <el-pagination
-      class="ext-pagination"
-      :current-page.sync="innerCurrentPage"
-      :page-size.sync="innerPageSize"
-      v-bind="bindingProps"
-      v-on="bindingEvents"
+    class="ext-pagination"
+    :current-page.sync="innerCurrentPage"
+    :page-size.sync="innerPageSize"
+    v-bind="bindingProps"
+    v-on="bindingEvents"
   />
 </template>
 
 <script>
 import { Pagination } from 'element-ui'
+import { camelCaseObject } from '../utils'
+import { cloneDeep } from 'lodash'
 
 export default {
   name: 'ExtPagination',
@@ -26,7 +28,7 @@ export default {
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     innerCurrentPage: {
       get() {
@@ -50,7 +52,7 @@ export default {
       }
     },
     bindingEvents() {
-      const events = this.$lodash.cloneDeep(this.$listeners)
+      const events = cloneDeep(this.$listeners)
       const currentChange = events['current-change']
       events['current-change'] = (page) => {
         this.innerCurrentPage = page

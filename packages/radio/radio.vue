@@ -7,13 +7,13 @@
   >
     <slot name="content">
       <template v-if="showButton">
-        <el-radio-button v-for="(option,index) in innerData" :key="index" :label="option.value">
-          {{ option.label }}
+        <el-radio-button v-for="(option,index) in innerOptions" :key="index" v-bind="options">
+          {{ option.text }}
         </el-radio-button>
       </template>
       <template v-else>
-        <el-radio v-for="(option,index) in innerData" :key="index" :label="option.value">
-          {{ option.label }}
+        <el-radio v-for="(option,index) in innerOptions" :key="index" v-bind="options">
+          {{ option.text }}
         </el-radio>
       </template>
     </slot>
@@ -22,6 +22,7 @@
 
 <script>
 import { Radio, RadioButton, RadioGroup } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../utils'
 
 export default {
   name: 'ExtRadio',
@@ -37,7 +38,7 @@ export default {
   props: {
     /* eslint-disable */
     value: [String, Number, Boolean],
-    data: {
+    options: {
       type: Array,
       default() {
         return []
@@ -54,12 +55,12 @@ export default {
   },
   data() {
     return {
-      innerData: []
+      innerOptions: []
     }
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     innerValue: {
       get() {
@@ -79,35 +80,36 @@ export default {
     }
   },
   watch: {
-    data: {
+    options: {
       handler() {
-        this.innerData = this.generateOptions(this.data)
+        this.innerOptions = this.generateOptions(this.options)
       },
       deep: true,
       immediate: true
     }
   },
   created() {
-    if (this.enumKey && (!this.data || !this.data.length)) {
-      if (this.$getEnums) {
-        this.$getEnums([this.enumKey]).then(response => {
-          this.innerData = response[this.enumKey] || []
+    if (this.enumKey && (!this.options || !this.options.length)) {
+      if (this.$getEnumList) {
+        this.$getEnumList([this.enumKey]).then(response => {
+          this.innerOptions = this.generateOptions(response[this.enumKey] || [])
         })
       }
     }
   },
   methods: {
-    generateOptions(data) {
-      if (!data || !data.length) return []
-      if (this.$isObjectArray(data)) {
-        const valueType = this.$getValueType(this.value)
-        return data.map(option => {
+    // 注意：el-radio 选中状态的值的属性是 label
+    generateOptions(options) {
+      if (!options || !options.length) return []
+      if (isObjectArray(options)) {
+        const valueType = getValueType(this.value)
+        return options.map(option => {
           const value = option[this.innerProps.value]
           const label = option[this.innerProps.label]
-          return { label: label, value: valueType(value) }
+          return { text: label, label: valueType(value) }
         })
       } else {
-        return data.map(item => Object.assign({ label: item, value: item }))
+        return options.map(item => Object.assign({ text: item, label: item }))
       }
     }
   }

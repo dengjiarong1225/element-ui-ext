@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Element-ui-ext"/>
+    <HelloWorld msg="Welcome to Element-ui-ext" />
   </div>
 </template>
 

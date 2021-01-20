@@ -2,11 +2,15 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的分页栏展示用法。</p>
-    <ext-pagination :current-page="currentPage" :page-size="pageSize" :total="total"
-                    @pagination-change="paginationChange"></ext-pagination>
-    <el-divider></el-divider>
-    <demo-api title="ExtPagination Events" type="Events" :params="EventsParams"></demo-api>
-    <el-divider></el-divider>
+    <ext-pagination
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="total"
+      @pagination-change="paginationChange"
+    />
+    <el-divider />
+    <demo-api title="ExtPagination Events" type="Events" :params="EventsParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/pagination">Pagination分页</el-link>
@@ -17,7 +21,7 @@
 
 <script>
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       currentPage: 1,
@@ -30,7 +34,7 @@ export default {
   },
   methods: {
     paginationChange(currentPage, pageSize) {
-      this.$success("currentPage=" + currentPage + ",pageSize=" + pageSize)
+      this.$success('currentPage=' + currentPage + ',pageSize=' + pageSize)
     }
   }
 }

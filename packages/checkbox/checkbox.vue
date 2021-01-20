@@ -7,13 +7,13 @@
   >
     <slot name="content">
       <template v-if="showButton">
-        <el-checkbox-button v-for="(option,index) in innerData" :key="index" :label="option.value">
-          {{ option.label }}
+        <el-checkbox-button v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+          {{ option.text }}
         </el-checkbox-button>
       </template>
       <template v-else>
-        <el-checkbox v-for="(option,index) in innerData" :key="index" :label="option.value">
-          {{ option.label }}
+        <el-checkbox v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+          {{ option.text }}
         </el-checkbox>
       </template>
     </slot>
@@ -22,6 +22,7 @@
 
 <script>
 import { Checkbox, CheckboxButton, CheckboxGroup } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../utils'
 
 export default {
   name: 'ExtCheckbox',
@@ -37,7 +38,7 @@ export default {
   props: {
     // eslint-disable-next-line vue/require-default-prop
     value: Array,
-    data: {
+    options: {
       type: Array,
       default() {
         return []
@@ -55,12 +56,12 @@ export default {
   },
   data() {
     return {
-      innerData: []
+      innerOptions: []
     }
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     innerValue: {
       get() {
@@ -80,35 +81,36 @@ export default {
     }
   },
   watch: {
-    data: {
+    options: {
       handler() {
-        this.innerData = this.generateOptions(this.data)
+        this.innerOptions = this.generateOptions(this.options)
       },
       deep: true,
       immediate: true
     }
   },
   created() {
-    if (this.enumKey && (!this.data || !this.data.length)) {
-      if (this.$getEnums) {
-        this.$getEnums([this.enumKey]).then(response => {
-          this.innerData = response[this.enumKey] || []
+    if (this.enumKey && (!this.options || !this.options.length)) {
+      if (this.$getEnumList) {
+        this.$getEnumList([this.enumKey]).then(response => {
+          this.innerOptions = this.generateOptions(response[this.enumKey] || [])
         })
       }
     }
   },
   methods: {
-    generateOptions(data) {
-      if (!data || !data.length) return []
-      if (this.$isObjectArray(data)) {
-        const valueType = this.$getValueType(this.value)
-        return data.map(option => {
+    // 注意：el-checkbox 选中状态的值的属性是 label
+    generateOptions: function(options) {
+      if (!options || !options.length) return []
+      if (isObjectArray(options)) {
+        const valueType = getValueType(this.value)
+        return options.map(option => {
           const value = option[this.innerProps.value]
           const label = option[this.innerProps.label]
-          return { label: label, value: valueType(value) }
+          return { text: label, label: valueType(value) }
         })
       } else {
-        return data.map(item => Object.assign({ label: item, value: item }))
+        return options.map(item => Object.assign({ text: item, label: item }))
       }
     }
   }

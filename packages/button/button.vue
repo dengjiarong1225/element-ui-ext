@@ -11,10 +11,15 @@
 
 <script>
 import { Button } from 'element-ui'
+import { camelCaseObject } from '../utils'
+import permission from '../directive/permission'
 
 export default {
   name: 'ExtButton',
   components: { ElButton: Button },
+  directives: {
+    permission
+  },
   props: {
     /* eslint-disable */
     name: String,
@@ -41,7 +46,7 @@ export default {
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     bindingProps() {
       return {

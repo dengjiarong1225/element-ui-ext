@@ -2,16 +2,16 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的下拉列表展示用法。</p>
-    <ext-select v-model="value" :data="options"></ext-select>
-    <el-divider></el-divider>
+    <ext-select v-model="value" :data="options" />
+    <el-divider />
     <h3>请求枚举</h3>
     <p>动态渲染枚举下拉列表。</p>
-    <ext-select v-model="value2" enum-key="device"></ext-select>
-    <el-divider></el-divider>
-    <demo-api title="ExtSelect Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
-    <demo-api title="props" type="Attributes" :params="PropsParams"></demo-api>
-    <el-divider></el-divider>
+    <ext-select v-model="value2" enum-key="device" />
+    <el-divider />
+    <demo-api title="ExtSelect Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
+    <demo-api title="props" type="Attributes" :params="PropsParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/select">Select选择器</el-link>
@@ -22,17 +22,17 @@
 
 <script>
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       value: 1,
       value2: 2,
       options: [
-        {value: 1, label: '奶茶三兄弟'},
-        {value: 2, label: '金桔柠檬茶'},
-        {value: 3, label: '芒果益菌多'},
-        {value: 4, label: '布丁巧克力'},
-        {value: 5, label: '焦糖玛奇朵'},
+        { value: 1, label: '奶茶三兄弟' },
+        { value: 2, label: '金桔柠檬茶' },
+        { value: 3, label: '芒果益菌多' },
+        { value: 4, label: '布丁巧克力' },
+        { value: 5, label: '焦糖玛奇朵' }
       ],
       AttributesParams: [
         ['value / v-model', '绑定值', 'String/Number/Boolean/Array', '—', '—'],

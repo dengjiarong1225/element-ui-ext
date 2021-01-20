@@ -2,22 +2,22 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的查询表单展示用法。</p>
-    <ext-search-form :model="model" :items="items" :span="8"></ext-search-form>
-    <el-divider></el-divider>
+    <ext-search-form :model="model" :items="items" :span="8" />
+    <el-divider />
     <h3>更多模式</h3>
     <p>支持icon/text两种模式。</p>
-    <ext-search-form :model="model2" :items="items" :span="8" type="text"></ext-search-form>
-    <el-divider></el-divider>
+    <ext-search-form :model="model2" :items="items" :span="8" type="text" />
+    <el-divider />
     <h3>无标题状态</h3>
     <p>label属性为不可见状态。</p>
-    <ext-search-form :model="model3" :items="items" :span="8" :show-label="false"></ext-search-form>
-    <el-divider></el-divider>
+    <ext-search-form :model="model3" :items="items" :span="8" :show-label="false" />
+    <el-divider />
     <h3>工具栏</h3>
     <p>渲染功能按钮。</p>
-    <ext-search-form :model="model4" :items="items" :span="8" :buttons="buttons"></ext-search-form>
-    <el-divider></el-divider>
-    <demo-api title="ExtSearchForm Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
+    <ext-search-form :model="model4" :items="items" :span="8" :buttons="buttons" />
+    <el-divider />
+    <demo-api title="ExtSearchForm Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/form">Form表单</el-link>
@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import ExtToolbar from "../toolbar";
-import ExtFormItem from "../form-item";
-import ExtForm from "../form";
+import ExtToolbar from '../toolbar'
+import ExtFormItem from '../form-item'
+import ExtForm from '../form'
 
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       model: {},
@@ -44,46 +44,46 @@ export default {
       model3: {},
       model4: {},
       items: [
-        {type: 'input', prop: 'input', label: '输入框'},
-        {type: 'number', prop: 'number', label: '计数器'},
-        {type: 'date', prop: 'date', label: '日期选择器'},
-        {type: 'time', prop: 'time', label: '时间选择器'},
-        {type: 'textarea', prop: 'textarea', label: '文本域', span: 24}
+        { type: 'input', prop: 'input', label: '输入框' },
+        { type: 'number', prop: 'number', label: '计数器' },
+        { type: 'date', prop: 'date', label: '日期选择器' },
+        { type: 'time', prop: 'time', label: '时间选择器' },
+        { type: 'textarea', prop: 'textarea', label: '文本域', span: 24 }
       ],
       buttons: [{
-        name: "新增",
+        name: '新增',
         type: 'success',
         right: 'addRight',
-        handler: function () {
-          this.$alert('add');
+        handler: function() {
+          this.$alert('add')
         },
-        icon: "el-icon-circle-plus-outline"
+        icon: 'el-icon-circle-plus-outline'
       }, {
-        name: "修改",
+        name: '修改',
         type: 'warning',
-        handler: function () {
-          this.$alert('edit');
+        handler: function() {
+          this.$alert('edit')
         },
-        icon: "el-icon-edit",
-        disabled: true,
+        icon: 'el-icon-edit',
+        disabled: true
       }, {
-        name: "删除",
+        name: '删除',
         type: 'danger',
         right: 'delRight',
         handler() {
-          this.$alert('del');
+          this.$alert('del')
         },
-        icon: "el-icon-delete",
+        icon: 'el-icon-delete'
       }, {
-        name: "查询",
+        name: '查询',
         type: 'primary',
         handler(done) {
           done(true)
-          setTimeout(function () {
+          setTimeout(function() {
             done(false)
           }, 1000)
         },
-        icon: "el-icon-search",
+        icon: 'el-icon-search'
       }],
       AttributesParams: [
         ['model', '表单数据对象', 'Object', '—', '—'],
@@ -95,21 +95,21 @@ export default {
       ]
     }
   },
-  methods:{
+  methods: {
     handleOpen(componentName) {
-      let component;
+      let component
       switch (componentName) {
-        case "ExtToolbar":
-          component = ExtToolbar;
-          break;
-        case "ExtFormItem":
-          component = ExtFormItem;
-          break;
-        case "ExtForm":
-          component = ExtForm;
-          break;
+        case 'ExtToolbar':
+          component = ExtToolbar
+          break
+        case 'ExtFormItem':
+          component = ExtFormItem
+          break
+        case 'ExtForm':
+          component = ExtForm
+          break
       }
-      this.$layerOpen({content: component, parent: this})
+      this.$layerOpen({ content: component, parent: this })
     }
   }
 }

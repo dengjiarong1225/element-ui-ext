@@ -7,13 +7,13 @@
   >
     <slot name="content">
       <template v-if="showValue">
-        <el-option v-for="(option,index) in innerData" :key="index" :label="option.label" :value="option.value" class="clearfix">
+        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" class="clearfix">
           <span style="float: left">{{ option.label }}</span>
           <span style="float: right; color: #8492a6; font-size: 13px">{{ option[showValue] || option.value }}</span>
         </el-option>
       </template>
       <template v-else>
-        <el-option v-for="(option,index) in innerData" :key="index" :label="option.label" :value="option.value" />
+        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" />
       </template>
     </slot>
   </el-select>
@@ -21,6 +21,7 @@
 
 <script>
 import { Select } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../utils'
 
 export default {
   name: 'ExtSelect',
@@ -34,7 +35,7 @@ export default {
     value: {
       required: false
     },
-    data: {
+    options: {
       type: Array,
       default() {
         return []
@@ -51,12 +52,12 @@ export default {
   },
   data() {
     return {
-      innerData: []
+      innerOptions: []
     }
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     innerValue: {
       get() {
@@ -79,35 +80,35 @@ export default {
     }
   },
   watch: {
-    data: {
+    options: {
       handler() {
-        this.innerData = this.generateOptions(this.data)
+        this.innerOptions = this.generateOptions(this.options)
       },
       deep: true,
       immediate: true
     }
   },
   created() {
-    if (this.enumKey && (!this.data || !this.data.length)) {
-      if (this.$getEnums) {
-       this.$getEnums([this.enumKey]).then(response => {
-          this.innerData = response[this.enumKey] || []
+    if (this.enumKey && (!this.options || !this.options.length)) {
+      if (this.$getEnumList) {
+       this.$getEnumList([this.enumKey]).then(response => {
+         this.innerOptions = this.generateOptions(response[this.enumKey] || [])
         })
       }
     }
   },
   methods: {
-    generateOptions(data) {
-      if (!data || !data.length) return []
-      if (this.$isObjectArray(data)) {
-        const valueType = this.$getValueType(this.value)
-        return data.map(option => {
+    generateOptions(options) {
+      if (!options || !options.length) return []
+      if (isObjectArray(options)) {
+        const valueType = getValueType(this.value)
+        return options.map(option => {
           const value = option[this.innerProps.value]
           const label = option[this.innerProps.label]
           return { label: label, value: valueType(value) }
         })
       } else {
-        return data.map(item => Object.assign({ label: item, value: item }))
+        return options.map(item => Object.assign({ label: item, value: item }))
       }
     }
   }

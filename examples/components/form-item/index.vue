@@ -3,21 +3,21 @@
     <h3>基础用法</h3>
     <p>type属性决定渲染的表单组件类型。</p>
     <el-form :model="model" label-suffix="：" label-width="auto">
-      <ext-form-item type="input" label="输入框" v-model="model.input"></ext-form-item>
-      <ext-form-item type="number" label="计数器" v-model="model.number"></ext-form-item>
-      <ext-form-item type="select" label="选择器" v-model="model.select" enum-key="sex" :events="events"></ext-form-item>
-      <ext-form-item type="radio" label="单选框" v-model="model.radio" enum-key="device"></ext-form-item>
-      <ext-form-item type="checkbox" label="多选框" v-model="model.checkbox" enum-key="application"></ext-form-item>
-      <ext-form-item type="date" label="日期选择器" v-model="model.date"></ext-form-item>
-      <ext-form-item type="time" label="时间选择器" v-model="model.time"></ext-form-item>
-      <ext-form-item type="switch" label="开关" v-model="model.switch"></ext-form-item>
-      <ext-form-item type="slider" label="滑块" v-model="model.slider"></ext-form-item>
-      <ext-form-item type="rate" label="评分" v-model="model.rate"></ext-form-item>
-      <ext-form-item type="cascader" label="级联选择器" v-model="model.cascader" :data="options2"></ext-form-item>
-      <ext-form-item type="textarea" label="文本域" v-model="model.textarea"></ext-form-item>
+      <ext-form-item v-model="model.input" type="input" label="输入框" />
+      <ext-form-item v-model="model.number" type="number" label="计数器" />
+      <ext-form-item v-model="model.select" type="select" label="选择器" enum-key="sex" :events="events" />
+      <ext-form-item v-model="model.radio" type="radio" label="单选框" enum-key="device" />
+      <ext-form-item v-model="model.checkbox" type="checkbox" label="多选框" enum-key="application" />
+      <ext-form-item v-model="model.date" type="date" label="日期选择器" />
+      <ext-form-item v-model="model.time" type="time" label="时间选择器" />
+      <ext-form-item v-model="model.switch" type="switch" label="开关" />
+      <ext-form-item v-model="model.slider" type="slider" label="滑块" />
+      <ext-form-item v-model="model.rate" type="rate" label="评分" />
+      <ext-form-item v-model="model.cascader" type="cascader" label="级联选择器" :data="options2" />
+      <ext-form-item v-model="model.textarea" type="textarea" label="文本域" />
     </el-form>
-    <el-divider></el-divider>
-    <demo-api title="ExtFormItem Attributes" type="Attributes" :params="AttributesParams"></demo-api>
+    <el-divider />
+    <demo-api title="ExtFormItem Attributes" type="Attributes" :params="AttributesParams" />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/radio">Radio单选框</el-link>、
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import ExtSelect from "../select";
-import ExtRadio from "../radio";
-import ExtCheckbox from "../checkbox";
-import ExtTimePicker from "../time-picker";
+import ExtSelect from '../select'
+import ExtRadio from '../radio'
+import ExtCheckbox from '../checkbox'
+import ExtTimePicker from '../time-picker'
 
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       model: {
@@ -67,16 +67,16 @@ export default {
         textarea: ''
       },
       events: {
-        change: function (val) {
+        change: function(val) {
           console.log(val)
         }
       },
       options: [
-        {value: 1, label: '奶茶三兄弟'},
-        {value: 2, label: '金桔柠檬茶'},
-        {value: 3, label: '芒果益菌多'},
-        {value: 4, label: '布丁巧克力'},
-        {value: 5, label: '焦糖玛奇朵'},
+        { value: 1, label: '奶茶三兄弟' },
+        { value: 2, label: '金桔柠檬茶' },
+        { value: 3, label: '芒果益菌多' },
+        { value: 4, label: '布丁巧克力' },
+        { value: 5, label: '焦糖玛奇朵' }
       ],
       options2: [{
         value: 'zhinan',
@@ -98,24 +98,24 @@ export default {
       ]
     }
   },
-  methods:{
+  methods: {
     handleOpen(componentName) {
-      let component;
+      let component
       switch (componentName) {
-        case "ExtSelect":
-          component = ExtSelect;
-          break;
-        case "ExtRadio":
-          component = ExtRadio;
-          break;
-        case "ExtCheckbox":
-          component = ExtCheckbox;
-          break;
-        case "ExtTimePicker":
-          component = ExtTimePicker;
-          break;
+        case 'ExtSelect':
+          component = ExtSelect
+          break
+        case 'ExtRadio':
+          component = ExtRadio
+          break
+        case 'ExtCheckbox':
+          component = ExtCheckbox
+          break
+        case 'ExtTimePicker':
+          component = ExtTimePicker
+          break
       }
-      this.$layerOpen({content: component, parent: this})
+      this.$layerOpen({ content: component, parent: this })
     }
   }
 }

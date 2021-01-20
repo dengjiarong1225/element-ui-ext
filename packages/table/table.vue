@@ -1,51 +1,53 @@
 <template>
-  <div class="ext-table" v-loading="delayLoading">
+  <div v-loading="delayLoading" class="ext-table">
     <ext-column-picker
-        v-if="filterable"
-        v-show="columnPickerVisible"
-        v-model="showColumns"
-        :columns="columns"
-        @mouseover.native="mouseover"
-        @mouseout.native="mouseout"
+      v-if="filterable"
+      v-show="columnPickerVisible"
+      v-model="showColumns"
+      :columns="columns"
+      @mouseover.native="mouseover"
+      @mouseout.native="mouseout"
     />
     <transition name="el-fade-in">
       <el-table
-          v-if="delayVisible"
-          ref="elTable"
-          :data="innerValue"
-          v-bind="tableProps"
-          @mouseover.native="mouseover"
-          @mouseout.native="mouseout"
-          v-on="tableEvents"
+        v-if="delayVisible"
+        ref="elTable"
+        :data="innerValue"
+        v-bind="tableProps"
+        @mouseover.native="mouseover"
+        @mouseout.native="mouseout"
+        v-on="tableEvents"
       >
-        <el-table-column v-if="selectable" v-bind="selectionProps"/>
-        <el-table-column v-if="showIndex" v-bind="indexProps"/>
+        <el-table-column v-if="selectable" v-bind="selectionProps" />
+        <el-table-column v-if="showIndex" v-bind="indexProps" />
         <template v-for="(column, index) in innerColumns">
           <template v-if="!!!column.hidden">
             <template v-if="column.slotted || column.slotName">
-              <slot :name="column.slotName || column.prop" v-bind="column"/>
+              <slot :name="column.slotName || column.prop" v-bind="column" />
             </template>
-            <el-table-column v-else :key="index" v-bind="column"/>
+            <el-table-column v-else :key="index" v-bind="column" />
           </template>
         </template>
-        <slot/>
+        <slot />
       </el-table>
     </transition>
     <ext-pagination
-        v-if="pageable"
-        :key="paginationKey"
-        ref="extPagination"
-        :total="innerTotal"
-        v-bind="paginationProps"
-        @pagination-change="paginationChange"
+      v-if="pageable"
+      :key="paginationKey"
+      ref="extPagination"
+      :total="innerTotal"
+      v-bind="paginationProps"
+      @pagination-change="paginationChange"
     />
   </div>
 </template>
 
 <script>
-import {Table, TableColumn} from 'element-ui'
+import { Table, TableColumn } from 'element-ui'
 import ExtPagination from '../pagination'
 import ExtColumnPicker from '../column-picker'
+import { camelCaseObject, transEnumName } from '../utils'
+import { pickBy, isNil } from 'lodash'
 
 const DEFAULT_VALUE = '--'
 const PAGINATION_PROPS = ['small', 'background', 'pageSize', 'currentPage', 'total', 'pageCount', 'layout', 'pageSizes', 'prevText', 'nextText', 'hideOnSinglePage']
@@ -119,8 +121,8 @@ export default {
   },
   data() {
     return {
-      delayVisible: false,// 延迟渲染标识，配合异步枚举使用
-      delayLoading: true,// 优化延迟渲染效果，配合 delayVisible 使用，可设置为 false
+      delayVisible: false, // 延迟渲染标识，配合异步枚举使用
+      delayLoading: true, // 优化延迟渲染效果，配合 delayVisible 使用，可设置为 false
       elTable: null,
       innerValue: [],
       innerColumns: [],
@@ -128,22 +130,22 @@ export default {
       current: null, // 当前选中行
       selection: [], // 当前页选中的行
       columnPickerVisible: false, // 是否显示列筛选器
-      columnPickerStyle: {top: 0, left: 0},
-      innerTotal: 0,// 总页数
+      columnPickerStyle: { top: 0, left: 0 },
+      innerTotal: 0, // 总页数
       paginationKey: 19921004
     }
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     listeners() {
       return this.$listeners
     },
     paginationProps() {
-      const props = this.$lodash.pickBy(this.attrs, (value, key) => PAGINATION_PROPS.indexOf(key) >= 0)
+      const props = pickBy(this.attrs, (value, key) => PAGINATION_PROPS.indexOf(key) >= 0)
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      if (!this.$lodash.isNil(props.total)) this.innerTotal = props.total
+      if (!isNil(props.total)) this.innerTotal = props.total
       return {
         currentPage: 1,
         pageSize: 20,
@@ -182,12 +184,12 @@ export default {
       return {
         border: true,
         headerCellClassName: 'ext-table-check-all ' + (this.multiple ? '' : 'ext-table-check-all--hidden'),
-        style: {width: '100%'},
+        style: { width: '100%' },
         ...this.attrs
       }
     },
     tableEvents() {
-      const events = {...this.$listeners}
+      const events = { ...this.$listeners }
       // 重定义currentChange和selectionChange事件，内部存储当前选中/勾选行数据
       const currentChange = events['current-change']
       events['current-change'] = (currentRow, oldCurrentRow) => {
@@ -274,14 +276,14 @@ export default {
   methods: {
     getWholeEnums(columns) {
       const keys = columns.filter(item => !!item.enumKey).map(item => item.enumKey)
-      if (keys.length && this.$getEnums) {
-        this.$getEnums(keys).then(response => {
+      if (keys.length && this.$getEnumList) {
+        this.$getEnumList(keys).then(response => {
           columns.forEach(column => {
             if (column.enumKey && !column.formatter) {
               const enumValue = response[column.enumKey] || []
               column.formatter = (row, col, val) => {
-                if (this.$lodash.isNil(val)) return DEFAULT_VALUE
-                return this.$transEnumName(enumValue, val, DEFAULT_VALUE)
+                if (isNil(val)) return DEFAULT_VALUE
+                return transEnumName(enumValue, val, DEFAULT_VALUE)
               }
             }
           })
@@ -299,7 +301,7 @@ export default {
     },
     rebuildColumns(columns) {
       columns.forEach(column => {
-        if (this.$lodash.isNil(column.showOverflowTooltip)) column.showOverflowTooltip = this.showOverflowTooltip
+        if (isNil(column.showOverflowTooltip)) column.showOverflowTooltip = this.showOverflowTooltip
       })
       this.innerColumns = columns
     },

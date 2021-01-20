@@ -2,23 +2,23 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的工具栏展示用法。</p>
-    <ext-toolbar :buttons="toolbar.buttons"></ext-toolbar>
-    <el-divider></el-divider>
+    <ext-toolbar :buttons="toolbar.buttons" />
+    <el-divider />
     <h3>隐藏状态</h3>
     <p>rights属性控制按钮显隐。</p>
-    <ext-toolbar :buttons="toolbar.buttons" :rights="toolbar.rights"></ext-toolbar>
-    <el-divider></el-divider>
+    <ext-toolbar :buttons="toolbar.buttons" :rights="toolbar.rights" />
+    <el-divider />
     <h3>按钮组</h3>
     <p>以按钮组的方式出现，常用于多项类似操作。</p>
-    <ext-toolbar :buttons="toolbar.buttons" group></ext-toolbar>
+    <ext-toolbar :buttons="toolbar.buttons" group />
     <h3>更多按钮</h3>
     <p>limit属性控制直接展现的按钮的数量，其余按钮以“更多”形式展现。</p>
-    <ext-toolbar :buttons="toolbar.buttons" :limit="2"></ext-toolbar>
-    <el-divider></el-divider>
-    <demo-api title="ExtToolbar Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
-    <demo-api title="ExtButton Attributes" type="Attributes" :params="ExtButtonAttributesParams"></demo-api>
-    <el-divider></el-divider>
+    <ext-toolbar :buttons="toolbar.buttons" :limit="2" />
+    <el-divider />
+    <demo-api title="ExtToolbar Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
+    <demo-api title="ExtButton Attributes" type="Attributes" :params="ExtButtonAttributesParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/button">Button按钮</el-link>
@@ -31,47 +31,47 @@
 </template>
 
 <script>
-import ExtButton from "../button";
+import ExtButton from '../button'
 
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       toolbar: {
         buttons: [{
-          name: "新增",
+          name: '新增',
           type: 'success',
           right: 'addRight',
-          handler: function () {
-            this.$success('add');
+          handler: function() {
+            this.$success('add')
           },
-          icon: "el-icon-circle-plus-outline"
+          icon: 'el-icon-circle-plus-outline'
         }, {
-          name: "修改",
+          name: '修改',
           type: 'warning',
-          handler: function () {
-            this.$alert('edit');
+          handler: function() {
+            this.$alert('edit')
           },
-          icon: "el-icon-edit",
-          disabled: true,
+          icon: 'el-icon-edit',
+          disabled: true
         }, {
-          name: "删除",
+          name: '删除',
           type: 'danger',
           right: 'delRight',
           handler() {
-            this.$alert('del');
+            this.$alert('del')
           },
-          icon: "el-icon-delete",
+          icon: 'el-icon-delete'
         }, {
-          name: "查询",
+          name: '查询',
           type: 'primary',
           handler(done) {
             done(true)
-            setTimeout(function () {
+            setTimeout(function() {
               done(false)
             }, 1000)
           },
-          icon: "el-icon-search",
+          icon: 'el-icon-search'
         }],
         rights: {
           addRight: true,
@@ -86,19 +86,19 @@ export default {
         ['align', '对齐方式', 'String', 'left/center/right', 'left']
       ],
       ExtButtonAttributesParams: [
-        ['right', '用户控制显隐的唯一标识，作为ExtToolbar中rights属性的key存在', 'String', '—', '—'],
+        ['right', '用户控制显隐的唯一标识，作为ExtToolbar中rights属性的key存在', 'String', '—', '—']
       ]
     }
   },
-  methods:{
+  methods: {
     handleOpen(componentName) {
-      let component;
+      let component
       switch (componentName) {
-        case "ExtButton":
-          component = ExtButton;
-          break;
+        case 'ExtButton':
+          component = ExtButton
+          break
       }
-      this.$layerOpen({content: component, parent: this})
+      this.$layerOpen({ content: component, parent: this })
     }
   }
 }

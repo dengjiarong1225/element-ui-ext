@@ -3,20 +3,20 @@
     <h3>基础用法</h3>
     <p>items属性快速渲染一般表单。</p>
     <p>基础的表单展示用法。</p>
-    <ext-form :model="model" :items="items"></ext-form>
-    <el-divider></el-divider>
+    <ext-form :model="model" :items="items" />
+    <el-divider />
     <h3>栅格布局</h3>
     <p>通过基础的 24 分栏，迅速简便地创建布局。</p>
-    <ext-form :model="model2" :items="items" :span="8"></ext-form>
-    <el-divider></el-divider>
+    <ext-form :model="model2" :items="items" :span="8" />
+    <el-divider />
     <h3>分栏间隔</h3>
     <p>分栏之间存在间隔。</p>
-    <ext-form :model="model3" :items="items" :span="8" :gutter="50"></ext-form>
-    <el-divider></el-divider>
+    <ext-form :model="model3" :items="items" :span="8" :gutter="50" />
+    <el-divider />
     <h3>禁用状态</h3>
     <p>表单项为不可用状态。</p>
-    <ext-form :model="model4" :items="items" :span="8" :readonly="true"></ext-form>
-    <el-divider></el-divider>
+    <ext-form :model="model4" :items="items" :span="8" :readonly="true" />
+    <el-divider />
     <h3>自定义表单项模板</h3>
     <p>自定义表单项的显示内容，可组合其他组件使用。</p>
     <ext-form :model="model5" :items="items2" label-width="100px">
@@ -28,7 +28,7 @@
         </ext-form-item>
       </template>
     </ext-form>
-    <el-divider></el-divider>
+    <el-divider />
     <h3>表单验证</h3>
     <p>在防止用户犯错的前提下，尽可能让用户更早地发现并纠正错误。</p>
     <ext-form ref="ruleForm" :model="model6" :rules="rules" :items="items" :span="8" label-width="100px">
@@ -37,13 +37,13 @@
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </ext-form>
-    <el-divider></el-divider>
-    <demo-api title="ExtForm Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
-    <demo-api title="ExtForm Slots" type="Slots" :params="SlotParams"></demo-api>
-    <el-divider></el-divider>
-    <demo-api title="ExtFormItem Attributes" type="Attributes" :params="ExtFormItemAttributesParams"></demo-api>
-    <el-divider></el-divider>
+    <el-divider />
+    <demo-api title="ExtForm Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
+    <demo-api title="ExtForm Slots" type="Slots" :params="SlotParams" />
+    <el-divider />
+    <demo-api title="ExtFormItem Attributes" type="Attributes" :params="ExtFormItemAttributesParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/form">Form表单</el-link>
@@ -56,18 +56,17 @@
 </template>
 
 <script>
-import ExtFormItem from "../form-item";
+import ExtFormItem from '../form-item'
 
 export default {
-  name: "index",
+  name: 'Index',
   data() {
-
     const OPTIONS = [
-      {value: 1, label: '奶茶三兄弟'},
-      {value: 2, label: '金桔柠檬茶'},
-      {value: 3, label: '芒果益菌多'},
-      {value: 4, label: '布丁巧克力'},
-      {value: 5, label: '焦糖玛奇朵'},
+      { value: 1, label: '奶茶三兄弟' },
+      { value: 2, label: '金桔柠檬茶' },
+      { value: 3, label: '芒果益菌多' },
+      { value: 4, label: '布丁巧克力' },
+      { value: 5, label: '焦糖玛奇朵' }
     ]
 
     const CASCADER_OPTIONS = [{
@@ -153,59 +152,59 @@ export default {
         textarea: ''
       },
       items: [
-        {type: 'input', prop: 'input', label: '输入框'},
-        {type: 'number', prop: 'number', label: '计数器'},
-        {type: 'select', prop: 'select', label: '选择器', enumKey: 'application'},
-        {type: 'radio', prop: 'radio', label: '单选框', data: OPTIONS, span: 24},
-        {type: 'checkbox', prop: 'checkbox', label: '多选框', data: OPTIONS, span: 24},
-        {type: 'date', prop: 'date', label: '日期选择器'},
-        {type: 'time', prop: 'time', label: '时间选择器'},
-        {type: 'switch', prop: 'switch', label: '开关'},
-        {type: 'slider', prop: 'slider', label: '滑块'},
-        {type: 'rate', prop: 'rate', label: '评分'},
-        {type: 'cascader', prop: 'cascader', label: '级联选择器', data: CASCADER_OPTIONS},
-        {type: 'textarea', prop: 'textarea', label: '文本域', span: 24},
+        { type: 'input', prop: 'input', label: '输入框' },
+        { type: 'number', prop: 'number', label: '计数器' },
+        { type: 'select', prop: 'select', label: '选择器', enumKey: 'application' },
+        { type: 'radio', prop: 'radio', label: '单选框', data: OPTIONS, span: 24 },
+        { type: 'checkbox', prop: 'checkbox', label: '多选框', data: OPTIONS, span: 24 },
+        { type: 'date', prop: 'date', label: '日期选择器' },
+        { type: 'time', prop: 'time', label: '时间选择器' },
+        { type: 'switch', prop: 'switch', label: '开关' },
+        { type: 'slider', prop: 'slider', label: '滑块' },
+        { type: 'rate', prop: 'rate', label: '评分' },
+        { type: 'cascader', prop: 'cascader', label: '级联选择器', data: CASCADER_OPTIONS },
+        { type: 'textarea', prop: 'textarea', label: '文本域', span: 24 }
       ],
       items2: [
-        {type: 'slot', prop: 'customize', label: '自定义插槽'}
+        { type: 'slot', prop: 'customize', label: '自定义插槽' }
       ],
       rules: {
         input: [
-          {required: true, trigger: 'blur'},
+          { required: true, trigger: 'blur' }
         ],
         number: [
-          {required: true, trigger: ['blur', 'change']},
+          { required: true, trigger: ['blur', 'change'] }
         ],
         select: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         radio: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         checkbox: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         date: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         time: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         switch: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         slider: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         rate: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         cascader: [
-          {required: true, trigger: 'change'},
+          { required: true, trigger: 'change' }
         ],
         textarea: [
-          {required: true, trigger: 'blur'},
-        ],
+          { required: true, trigger: 'blur' }
+        ]
       },
       AttributesParams: [
         ['model', '表单数据对象', 'Object', '—', '—'],
@@ -229,26 +228,26 @@ export default {
   },
   methods: {
     handleOpen(componentName) {
-      let component;
+      let component
       switch (componentName) {
-        case "ExtFormItem":
-          component = ExtFormItem;
-          break;
+        case 'ExtFormItem':
+          component = ExtFormItem
+          break
       }
-      this.$layerOpen({content: component, parent: this})
+      this.$layerOpen({ content: component, parent: this })
     },
     submitForm(formName) {
       this.$refs[formName].$refs.elForm.validate((valid) => {
         if (valid) {
-          alert('submit!');
+          alert('submit!')
         } else {
-          console.log('error submit!!');
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     },
     resetForm(formName) {
-      this.$refs[formName].$refs.elForm.resetFields();
+      this.$refs[formName].$refs.elForm.resetFields()
     }
   }
 }

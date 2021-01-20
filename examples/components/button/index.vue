@@ -2,18 +2,18 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的按钮展示用法。</p>
-    <ext-button name="默认按钮"></ext-button>
-    <ext-button type="primary" name="主要按钮"></ext-button>
-    <ext-button type="success" name="成功按钮"></ext-button>
-    <ext-button type="info" name="信息按钮"></ext-button>
-    <ext-button type="warning" name="警告按钮"></ext-button>
-    <ext-button type="danger" name="危险按钮"></ext-button>
-    <el-divider></el-divider>
+    <ext-button name="默认按钮" />
+    <ext-button type="primary" name="主要按钮" />
+    <ext-button type="success" name="成功按钮" />
+    <ext-button type="info" name="信息按钮" />
+    <ext-button type="warning" name="警告按钮" />
+    <ext-button type="danger" name="危险按钮" />
+    <el-divider />
     <h3>点击事件</h3>
     <p>点击按钮触发handler属性事件。</p>
     <ext-button type="primary" :handler="handler">试试点击我</ext-button>
     <ext-button type="primary" :handler="handlerLoading">也试试点击我</ext-button>
-    <el-divider></el-divider>
+    <el-divider />
     <h3>权限按钮</h3>
     <p>permissions属性用于根据角色控制按钮显隐。</p>
     <div class="btn-wrap">
@@ -25,9 +25,9 @@
       <span>admin按钮占位文本</span>
       <ext-button type="primary" :permissions="['admin']">admin角色可见</ext-button>
     </div>
-    <el-divider></el-divider>
-    <demo-api title="ExtButton Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
+    <el-divider />
+    <demo-api title="ExtButton Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/button">Button按钮</el-link>
@@ -38,15 +38,15 @@
 
 <script>
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
-      handler: function () {
-        this.$alert('哈哈我出来了');
+      handler: function() {
+        this.$alert('哈哈我出来了')
       },
-      handlerLoading: function (done) {
+      handlerLoading: function(done) {
         done(true)
-        setTimeout(function () {
+        setTimeout(function() {
           done(false)
         }, 500)
       },

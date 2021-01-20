@@ -17,6 +17,7 @@
 
 <script>
 import { TimePicker, TimeSelect } from 'element-ui'
+import { camelCaseObject } from '../utils'
 
 export default {
   name: 'ExtTimePicker',
@@ -35,7 +36,7 @@ export default {
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     innerValue: {
       get() {

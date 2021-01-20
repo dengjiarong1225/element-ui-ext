@@ -1,52 +1,131 @@
 <template>
   <div class="ext-form">
-    <el-row :gutter="gutter" justify="space-between">
+    <el-form
+      v-if="bindingProps.inline"
+      ref="elForm"
+      :style="style"
+      :model="model"
+      v-bind="bindingProps"
+      v-on="$listeners"
+    >
+      <template v-for="(multiItem,multiIndex) in multiItems">
+        <el-collapse
+          v-if="multiItem.hasCollapse"
+          :key="multiIndex"
+          v-model="activeNames"
+          class="ext-form__collapse"
+        >
+          <el-collapse-item :name="multiIndex" class="ext-form__collapse-item">
+            <template slot="title">
+              <el-alert
+                v-if="multiItem.type==='divider'"
+                class="ext-form__divider"
+                :type="multiItem.theme || 'success'"
+                :effect="multiItem.effect || 'light'"
+                :closable="false"
+              >
+                <i v-if="multiItem.icon" class="el-alert__icon" :class="multiItem.icon" />
+                <span>{{ multiItem.label }}</span>
+              </el-alert>
+            </template>
+            <template v-for="(item,index) in multiItem.data">
+              <template v-if="!item.hidden">
+                <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
+                <ext-form-item
+                  v-else-if="item.numberValue"
+                  :key="index"
+                  :ref="item.prop"
+                  v-model.number="model[item.prop]"
+                  form-item
+                  v-bind="item"
+                  v-on="getItemEvents(item)"
+                />
+                <ext-form-item
+                  v-else
+                  :key="index"
+                  :ref="item.prop"
+                  v-model="model[item.prop]"
+                  form-item
+                  v-bind="item"
+                  v-on="getItemEvents(item)"
+                />
+              </template>
+            </template>
+          </el-collapse-item>
+        </el-collapse>
+        <template v-for="(item,index) in multiItem.data" v-else>
+          <template v-if="!item.hidden">
+            <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
+            <ext-form-item
+              v-else-if="item.numberValue"
+              :key="index"
+              :ref="item.prop"
+              v-model.number="model[item.prop]"
+              form-item
+              v-bind="item"
+              v-on="getItemEvents(item)"
+            />
+            <ext-form-item
+              v-else
+              :key="index"
+              :ref="item.prop"
+              v-model="model[item.prop]"
+              form-item
+              v-bind="item"
+              v-on="getItemEvents(item)"
+            />
+          </template>
+        </template>
+      </template>
+      <slot />
+    </el-form>
+    <el-row v-else :gutter="gutter" justify="space-between">
       <el-form
-          ref="elForm"
-          v-resize:debounce.50.initial="resize"
-          :style="style"
-          :model="model"
-          v-bind="bindingProps"
-          v-on="$listeners"
+        ref="elForm"
+        v-resize:debounce.50.initial="resize"
+        :style="style"
+        :model="model"
+        v-bind="bindingProps"
+        v-on="$listeners"
       >
         <template v-for="(multiItem,multiIndex) in multiItems">
           <el-collapse
-              v-if="multiItem.hasCollapse"
-              :key="multiIndex"
-              v-model="activeNames"
-              class="ext-form__collapse"
+            v-if="multiItem.hasCollapse"
+            :key="multiIndex"
+            v-model="activeNames"
+            class="ext-form__collapse"
           >
             <el-collapse-item :name="multiIndex" class="ext-form__collapse-item">
               <template slot="title">
                 <el-alert
-                    v-if="multiItem.type==='divider'"
-                    class="ext-form__divider"
-                    :type="multiItem.theme || 'success'"
-                    :effect="multiItem.effect || 'light'"
-                    :closable="false"
+                  v-if="multiItem.type==='divider'"
+                  class="ext-form__divider"
+                  :type="multiItem.theme || 'success'"
+                  :effect="multiItem.effect || 'light'"
+                  :closable="false"
                 >
-                  <i v-if="multiItem.icon" class="el-alert__icon" :class="multiItem.icon"/>
+                  <i v-if="multiItem.icon" class="el-alert__icon" :class="multiItem.icon" />
                   <span>{{ multiItem.label }}</span>
                 </el-alert>
               </template>
               <template v-for="(item,index) in multiItem.data">
                 <el-col v-if="!item.hidden" :key="index" :span="item.span || innerSpan">
-                  <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item"/>
+                  <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
                   <ext-form-item
-                      v-else-if="item.numberValue"
-                      :ref="item.prop"
-                      v-model.number="model[item.prop]"
-                      form-item
-                      v-bind="item"
-                      v-on="getItemEvents(item)"
+                    v-else-if="item.numberValue"
+                    :ref="item.prop"
+                    v-model.number="model[item.prop]"
+                    form-item
+                    v-bind="item"
+                    v-on="getItemEvents(item)"
                   />
                   <ext-form-item
-                      v-else
-                      :ref="item.prop"
-                      v-model="model[item.prop]"
-                      form-item
-                      v-bind="item"
-                      v-on="getItemEvents(item)"
+                    v-else
+                    :ref="item.prop"
+                    v-model="model[item.prop]"
+                    form-item
+                    v-bind="item"
+                    v-on="getItemEvents(item)"
                   />
                 </el-col>
               </template>
@@ -54,22 +133,22 @@
           </el-collapse>
           <template v-for="(item,index) in multiItem.data" v-else>
             <el-col v-if="!item.hidden" :key="index" :span="item.span || innerSpan">
-              <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item"/>
+              <slot v-if="item.slotName || item.type==='slot'" :name="item.slotName || item.prop" v-bind="item" />
               <ext-form-item
-                  v-else-if="item.numberValue"
-                  :ref="item.prop"
-                  v-model.number="model[item.prop]"
-                  form-item
-                  v-bind="item"
-                  v-on="getItemEvents(item)"
+                v-else-if="item.numberValue"
+                :ref="item.prop"
+                v-model.number="model[item.prop]"
+                form-item
+                v-bind="item"
+                v-on="getItemEvents(item)"
               />
               <ext-form-item
-                  v-else
-                  :ref="item.prop"
-                  v-model="model[item.prop]"
-                  form-item
-                  v-bind="item"
-                  v-on="getItemEvents(item)"
+                v-else
+                :ref="item.prop"
+                v-model="model[item.prop]"
+                form-item
+                v-bind="item"
+                v-on="getItemEvents(item)"
               />
             </el-col>
           </template>
@@ -81,11 +160,15 @@
 </template>
 
 <script>
-import {Row, Col, Form, Collapse, CollapseItem, Alert} from 'element-ui'
+import { Row, Col, Form, Collapse, CollapseItem, Alert } from 'element-ui'
 import ExtFormItem from '../form-item'
+import { camelCaseObject } from '../utils'
+import resize from 'vue-resize-directive'
+import { sum, cloneDeep, isNil, isArray } from 'lodash'
 
 export default {
   name: 'ExtForm',
+  directives: { resize },
   components: {
     ElRow: Row,
     ElCol: Col,
@@ -145,7 +228,7 @@ export default {
   },
   computed: {
     attrs() {
-      return this.$camelCaseObject(this.$attrs)
+      return camelCaseObject(this.$attrs)
     },
     style() {
       return {
@@ -173,8 +256,8 @@ export default {
       immediate: true // 初始化就要实例化innerSpan
     },
     items: {
-       handler() {
-        const items = this.$lodash.cloneDeep(this.items) // 不要改变入参对象
+      handler() {
+        const items = cloneDeep(this.items) // 不要改变入参对象
         this.getWholeEnums(items)
         const dividerArr = this.getDividerArr(items)
         this.rebuildItems(items, dividerArr)
@@ -212,7 +295,7 @@ export default {
      */
     emitFormChange() {
       const spanArr = this.items.map(item => item.span || this.innerSpan || 0)
-      const hasMore = this.$lodash.sum(spanArr) > 24
+      const hasMore = sum(spanArr) > 24
       this.$emit('form-change', hasMore)
     },
     /**
@@ -222,8 +305,8 @@ export default {
     getWholeEnums(items) {
       const keys = items.filter(item => !!item.enumKey).map(item => item.enumKey)
       if (keys.length) {
-        if (this.$getEnums) {
-          this.$getEnums(keys).then(response => {
+        if (this.$getEnumList) {
+          this.$getEnumList(keys).then(response => {
             items.forEach(item => {
               const enumValue = response[item.enumKey] || []
               if (item.enumKey) item.data = enumValue
@@ -244,7 +327,7 @@ export default {
         // 1.1 存储分隔符索引
         if (item.type === 'divider') indexArr.push(index)
         // 1.2 切换表单只读状态
-        item.readonly = this.$lodash.isNil(item.readonly) ? this.readonly : item.readonly
+        item.readonly = isNil(item.readonly) ? this.readonly : item.readonly
         // 1.3 合并校验规则
         const formItemRules = this.bindingProps.rules[item.prop]
         const itemRules = item.rules
@@ -252,7 +335,7 @@ export default {
           if (!itemRules) {
             item.rules = formItemRules
           } else {
-            const arrayRules = this.$lodash.isArray(formItemRules) && formItemRules || itemRules
+            const arrayRules = isArray(formItemRules) && formItemRules || itemRules
             const objectRule = Array.isArray(formItemRules) && itemRules || formItemRules
             item.rules = [...arrayRules, objectRule]
           }
@@ -287,13 +370,13 @@ export default {
           current++
         }
       } else {
-        multiItems = [{hasCollapse: false, data: items}]
+        multiItems = [{ hasCollapse: false, data: items }]
       }
       this.multiItems = multiItems
       this.activeNames = multiItems.map((item, index) => index)
     },
     getItemEvents(item) {
-      const events = this.$lodash.cloneDeep(item.events || {}) // 内部封装就好，不要改变items
+      const events = cloneDeep(item.events || {}) // 内部封装就好，不要改变items
       const handleEnter = events.enter
       // 配合 ExtSearchForm 实现 Enter 搜索
       events.enter = () => {

@@ -39,46 +39,46 @@ export default {
   },
   methods: {
     handleOpen(componentName) {
-      let component;
+      let component
       switch (componentName) {
-        case "ExtButton":
-          component = ExtButton;
-          break;
-        case "ExtToolbar":
-          component = ExtToolbar;
-          break;
-        case "ExtSelect":
-          component = ExtSelect;
-          break;
-        case "ExtRadio":
-          component = ExtRadio;
-          break;
-        case "ExtCheckbox":
-          component = ExtCheckbox;
-          break;
-        case "ExtTimePicker":
-          component = ExtTimePicker;
-          break;
-        case "ExtFormItem":
-          component = ExtFormItem;
-          break;
-        case "ExtForm":
-          component = ExtForm;
-          break;
-        case "ExtSearchForm":
-          component = ExtSearchForm;
-          break;
-        case "ExtPagination":
-          component = ExtPagination;
-          break;
-        case "ExtTable":
-          component = ExtTable;
-          break;
-        case "ExtDialog":
-          component = ExtDialog;
-          break;
+        case 'ExtButton':
+          component = ExtButton
+          break
+        case 'ExtToolbar':
+          component = ExtToolbar
+          break
+        case 'ExtSelect':
+          component = ExtSelect
+          break
+        case 'ExtRadio':
+          component = ExtRadio
+          break
+        case 'ExtCheckbox':
+          component = ExtCheckbox
+          break
+        case 'ExtTimePicker':
+          component = ExtTimePicker
+          break
+        case 'ExtFormItem':
+          component = ExtFormItem
+          break
+        case 'ExtForm':
+          component = ExtForm
+          break
+        case 'ExtSearchForm':
+          component = ExtSearchForm
+          break
+        case 'ExtPagination':
+          component = ExtPagination
+          break
+        case 'ExtTable':
+          component = ExtTable
+          break
+        case 'ExtDialog':
+          component = ExtDialog
+          break
       }
-      this.$layerOpen({content: component, parent: this})
+      this.$layerOpen({ content: component, parent: this })
     }
   }
 }

@@ -2,20 +2,20 @@
   <div class="app-wrapper">
     <h3>基础用法</h3>
     <p>基础的单选框列表展示用法。</p>
-    <ext-radio v-model="value" :data="options"></ext-radio>
-    <el-divider></el-divider>
+    <ext-radio v-model="value" :data="options" />
+    <el-divider />
     <h3>请求枚举</h3>
     <p>动态渲染枚举单选框列表。</p>
-    <ext-radio v-model="value2" enum-key="device"></ext-radio>
-    <el-divider></el-divider>
+    <ext-radio v-model="value2" enum-key="device" />
+    <el-divider />
     <h3>按钮样式</h3>
     <p>按钮样式的多选组合。</p>
-    <ext-radio v-model="value3" enum-key="device" show-button></ext-radio>
-    <el-divider></el-divider>
-    <demo-api title="ExtRadio Attributes" type="Attributes" :params="AttributesParams"></demo-api>
-    <el-divider></el-divider>
-    <demo-api title="props" type="Attributes" :params="PropsParams"></demo-api>
-    <el-divider></el-divider>
+    <ext-radio v-model="value3" enum-key="device" show-button />
+    <el-divider />
+    <demo-api title="ExtRadio Attributes" type="Attributes" :params="AttributesParams" />
+    <el-divider />
+    <demo-api title="props" type="Attributes" :params="PropsParams" />
+    <el-divider />
     <p>更多参数参考
       element-ui 的
       <el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/radio">Radio单选框</el-link>
@@ -26,18 +26,18 @@
 
 <script>
 export default {
-  name: "index",
+  name: 'Index',
   data() {
     return {
       value: 1,
       value2: 2,
       value3: 2,
       options: [
-        {value: 1, label: '奶茶三兄弟'},
-        {value: 2, label: '金桔柠檬茶'},
-        {value: 3, label: '芒果益菌多'},
-        {value: 4, label: '布丁巧克力'},
-        {value: 5, label: '焦糖玛奇朵'},
+        { value: 1, label: '奶茶三兄弟' },
+        { value: 2, label: '金桔柠檬茶' },
+        { value: 3, label: '芒果益菌多' },
+        { value: 4, label: '布丁巧克力' },
+        { value: 5, label: '焦糖玛奇朵' }
       ],
       AttributesParams: [
         ['value / v-model', '绑定值', 'String/Number/Boolean', '—', '—'],
