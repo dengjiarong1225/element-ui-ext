@@ -319,6 +319,8 @@ export default {
         const end = page * size
         this.innerValue = this.data.slice(start, end)
       }
+      this.paginationProps.currentPage = page
+      this.paginationProps.pageSize = size
       this.$emit('pagination-change', page, size)
     },
     mouseover() {
