@@ -11,8 +11,8 @@
 
 <script>
 import { Button } from 'element-ui'
-import { camelCaseObject } from '../utils'
-import permission from '../directive/permission'
+import { camelCaseObject } from '../../utils'
+import permission from '../../directive/permission'
 
 export default {
   name: 'ExtButton',

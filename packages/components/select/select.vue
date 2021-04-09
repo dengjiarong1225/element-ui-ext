@@ -1,43 +1,40 @@
 <template>
-  <el-radio-group
+  <el-select
     v-model="innerValue"
-    class="ext-radio"
+    class="ext-select"
     v-bind="bindingProps"
     v-on="$listeners"
   >
     <slot name="content">
-      <template v-if="showButton">
-        <el-radio-button v-for="(option,index) in innerOptions" :key="index" v-bind="options">
-          {{ option.text }}
-        </el-radio-button>
+      <template v-if="showValue">
+        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" class="clearfix">
+          <span style="float: left">{{ option.label }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ option[showValue] || option.value }}</span>
+        </el-option>
       </template>
       <template v-else>
-        <el-radio v-for="(option,index) in innerOptions" :key="index" v-bind="options">
-          {{ option.text }}
-        </el-radio>
+        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" />
       </template>
     </slot>
-  </el-radio-group>
+  </el-select>
 </template>
 
 <script>
-import { Radio, RadioButton, RadioGroup } from 'element-ui'
-import { getValueType, isObjectArray, camelCaseObject } from '../utils'
+import { Select } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../../utils'
 
 export default {
-  name: 'ExtRadio',
-  components: {
-    ElRadio: Radio,
-    ElRadioButton: RadioButton,
-    ElRadioGroup: RadioGroup
-  },
+  name: 'ExtSelect',
+  components: { ElSelect: Select },
   model: {
     prop: 'value',
     event: 'input'
   },
   props: {
     /* eslint-disable */
-    value: [String, Number, Boolean],
+    value: {
+      required: false
+    },
     options: {
       type: Array,
       default() {
@@ -51,7 +48,7 @@ export default {
       }
     },
     enumKey: String,
-    showButton: Boolean
+    showValue: Boolean
   },
   data() {
     return {
@@ -75,6 +72,9 @@ export default {
     },
     bindingProps() {
       return {
+        collapseTags: true,
+        filterable: true,
+        clearable: true,
         ...this.attrs
       }
     }
@@ -91,14 +91,13 @@ export default {
   created() {
     if (this.enumKey && (!this.options || !this.options.length)) {
       if (this.$getEnumList) {
-        this.$getEnumList([this.enumKey]).then(response => {
-          this.innerOptions = this.generateOptions(response[this.enumKey] || [])
+       this.$getEnumList([this.enumKey]).then(response => {
+         this.innerOptions = this.generateOptions(response[this.enumKey] || [])
         })
       }
     }
   },
   methods: {
-    // 注意：el-radio 选中状态的值的属性是 label
     generateOptions(options) {
       if (!options || !options.length) return []
       if (isObjectArray(options)) {
@@ -106,10 +105,10 @@ export default {
         return options.map(option => {
           const value = option[this.innerProps.value]
           const label = option[this.innerProps.label]
-          return { text: label, label: valueType(value) }
+          return { label: label, value: valueType(value) }
         })
       } else {
-        return options.map(item => Object.assign({ text: item, label: item }))
+        return options.map(item => Object.assign({ label: item, value: item }))
       }
     }
   }

@@ -162,7 +162,7 @@
 <script>
 import { Row, Col, Form, Collapse, CollapseItem, Alert } from 'element-ui'
 import ExtFormItem from '../form-item'
-import { camelCaseObject } from '../utils'
+import { camelCaseObject } from '../../utils'
 import resize from 'vue-resize-directive'
 import { sum, cloneDeep, isNil, isArray } from 'lodash'
 

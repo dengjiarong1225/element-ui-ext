@@ -1,40 +1,43 @@
 <template>
-  <el-select
+  <el-checkbox-group
     v-model="innerValue"
-    class="ext-select"
+    class="ext-checkbox"
     v-bind="bindingProps"
     v-on="$listeners"
   >
     <slot name="content">
-      <template v-if="showValue">
-        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" class="clearfix">
-          <span style="float: left">{{ option.label }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px">{{ option[showValue] || option.value }}</span>
-        </el-option>
+      <template v-if="showButton">
+        <el-checkbox-button v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+          {{ option.text }}
+        </el-checkbox-button>
       </template>
       <template v-else>
-        <el-option v-for="(option,index) in innerOptions" :key="index" :label="option.label" :value="option.value" />
+        <el-checkbox v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+          {{ option.text }}
+        </el-checkbox>
       </template>
     </slot>
-  </el-select>
+  </el-checkbox-group>
 </template>
 
 <script>
-import { Select } from 'element-ui'
-import { getValueType, isObjectArray, camelCaseObject } from '../utils'
+import { Checkbox, CheckboxButton, CheckboxGroup } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../../utils'
 
 export default {
-  name: 'ExtSelect',
-  components: { ElSelect: Select },
+  name: 'ExtCheckbox',
+  components: {
+    ElCheckbox: Checkbox,
+    ElCheckboxButton: CheckboxButton,
+    ElCheckboxGroup: CheckboxGroup
+  },
   model: {
     prop: 'value',
     event: 'input'
   },
   props: {
-    /* eslint-disable */
-    value: {
-      required: false
-    },
+    // eslint-disable-next-line vue/require-default-prop
+    value: Array,
     options: {
       type: Array,
       default() {
@@ -47,8 +50,9 @@ export default {
         return {}
       }
     },
+    // eslint-disable-next-line vue/require-default-prop
     enumKey: String,
-    showValue: Boolean
+    showButton: Boolean
   },
   data() {
     return {
@@ -72,9 +76,6 @@ export default {
     },
     bindingProps() {
       return {
-        collapseTags: true,
-        filterable: true,
-        clearable: true,
         ...this.attrs
       }
     }
@@ -91,24 +92,25 @@ export default {
   created() {
     if (this.enumKey && (!this.options || !this.options.length)) {
       if (this.$getEnumList) {
-       this.$getEnumList([this.enumKey]).then(response => {
-         this.innerOptions = this.generateOptions(response[this.enumKey] || [])
+        this.$getEnumList([this.enumKey]).then(response => {
+          this.innerOptions = this.generateOptions(response[this.enumKey] || [])
         })
       }
     }
   },
   methods: {
-    generateOptions(options) {
+    // 注意：el-checkbox 选中状态的值的属性是 label
+    generateOptions: function(options) {
       if (!options || !options.length) return []
       if (isObjectArray(options)) {
         const valueType = getValueType(this.value)
         return options.map(option => {
           const value = option[this.innerProps.value]
           const label = option[this.innerProps.label]
-          return { label: label, value: valueType(value) }
+          return { text: label, label: valueType(value) }
         })
       } else {
-        return options.map(item => Object.assign({ label: item, value: item }))
+        return options.map(item => Object.assign({ text: item, label: item }))
       }
     }
   }
@@ -116,5 +118,9 @@ export default {
 </script>
 
 <style scoped>
-
+.ext-checkbox {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+}
 </style>

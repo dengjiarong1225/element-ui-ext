@@ -1,43 +1,43 @@
 <template>
-  <el-checkbox-group
+  <el-radio-group
     v-model="innerValue"
-    class="ext-checkbox"
+    class="ext-radio"
     v-bind="bindingProps"
     v-on="$listeners"
   >
     <slot name="content">
       <template v-if="showButton">
-        <el-checkbox-button v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+        <el-radio-button v-for="(option,index) in innerOptions" :key="index" v-bind="options">
           {{ option.text }}
-        </el-checkbox-button>
+        </el-radio-button>
       </template>
       <template v-else>
-        <el-checkbox v-for="(option,index) in innerOptions" :key="index" v-bind="option">
+        <el-radio v-for="(option,index) in innerOptions" :key="index" v-bind="options">
           {{ option.text }}
-        </el-checkbox>
+        </el-radio>
       </template>
     </slot>
-  </el-checkbox-group>
+  </el-radio-group>
 </template>
 
 <script>
-import { Checkbox, CheckboxButton, CheckboxGroup } from 'element-ui'
-import { getValueType, isObjectArray, camelCaseObject } from '../utils'
+import { Radio, RadioButton, RadioGroup } from 'element-ui'
+import { getValueType, isObjectArray, camelCaseObject } from '../../utils'
 
 export default {
-  name: 'ExtCheckbox',
+  name: 'ExtRadio',
   components: {
-    ElCheckbox: Checkbox,
-    ElCheckboxButton: CheckboxButton,
-    ElCheckboxGroup: CheckboxGroup
+    ElRadio: Radio,
+    ElRadioButton: RadioButton,
+    ElRadioGroup: RadioGroup
   },
   model: {
     prop: 'value',
     event: 'input'
   },
   props: {
-    // eslint-disable-next-line vue/require-default-prop
-    value: Array,
+    /* eslint-disable */
+    value: [String, Number, Boolean],
     options: {
       type: Array,
       default() {
@@ -50,7 +50,6 @@ export default {
         return {}
       }
     },
-    // eslint-disable-next-line vue/require-default-prop
     enumKey: String,
     showButton: Boolean
   },
@@ -99,8 +98,8 @@ export default {
     }
   },
   methods: {
-    // 注意：el-checkbox 选中状态的值的属性是 label
-    generateOptions: function(options) {
+    // 注意：el-radio 选中状态的值的属性是 label
+    generateOptions(options) {
       if (!options || !options.length) return []
       if (isObjectArray(options)) {
         const valueType = getValueType(this.value)
@@ -118,9 +117,5 @@ export default {
 </script>
 
 <style scoped>
-.ext-checkbox {
-  display: inline-block;
-  line-height: 1;
-  vertical-align: middle;
-}
+
 </style>

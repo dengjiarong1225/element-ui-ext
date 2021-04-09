@@ -20,7 +20,7 @@
 
 <script>
 import { Dialog } from 'element-ui'
-import elDragDialog from '../directive/el-drag-dialog'
+import elDragDialog from '../../directive/el-drag-dialog'
 
 export default {
   name: 'ExtDialog',

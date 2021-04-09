@@ -101,7 +101,7 @@ import ExtSelect from '../select'
 import ExtRadio from '../radio'
 import ExtCheckbox from '../checkbox'
 import ExtTimePicker from '../time-picker'
-import { camelCaseObject } from '../utils'
+import { camelCaseObject } from '../../utils'
 import { pickBy, cloneDeep, isNil, isArray, find } from 'lodash'
 
 const LABEL_PROPS = ['prop', 'label', 'label-width', 'labelWidth', 'required', 'rules', 'inline-message', 'inlineMessage']

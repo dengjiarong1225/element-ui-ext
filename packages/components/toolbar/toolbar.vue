@@ -68,7 +68,7 @@
 <script>
 import { ButtonGroup, Button, Dropdown, DropdownMenu, DropdownItem } from 'element-ui'
 import ExtButton from '../button'
-import permission from '../directive/permission'
+import permission from '../../directive/permission'
 import { isNil, isEmpty } from 'lodash'
 
 const ALIGN_MAP = {

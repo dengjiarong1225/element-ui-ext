@@ -56,7 +56,7 @@
 import { Tooltip, Link, Tag } from 'element-ui'
 import ExtToolbar from '../toolbar'
 import ExtForm from '../form'
-import { camelCaseObject } from '../utils'
+import { camelCaseObject } from '../../utils'
 import { pickBy, cloneDeep, isNil, isArray } from 'lodash'
 
 const TOOLBAR_PROPS = ['buttons', 'rights', 'group', 'labelWidth', 'limit']

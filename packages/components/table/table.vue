@@ -46,7 +46,7 @@
 import { Table, TableColumn } from 'element-ui'
 import ExtPagination from '../pagination'
 import ExtColumnPicker from '../column-picker'
-import { camelCaseObject, transEnumName } from '../utils'
+import { camelCaseObject, transEnumName } from '../../utils'
 import { pickBy, isNil } from 'lodash'
 
 const DEFAULT_VALUE = '--'

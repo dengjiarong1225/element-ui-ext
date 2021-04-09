@@ -17,7 +17,7 @@
 
 <script>
 import { TimePicker, TimeSelect } from 'element-ui'
-import { camelCaseObject } from '../utils'
+import { camelCaseObject } from '../../utils'
 
 export default {
   name: 'ExtTimePicker',
